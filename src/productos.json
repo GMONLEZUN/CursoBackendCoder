@@ -1,6 +1,6 @@
 [
-    {
-    "id": 0,
+  {
+    "id": "0",
     "title": "Agua",
     "description": "Agua mineral sin gas marca: Villa del Sur, botella 500ml",
     "price": 250,
@@ -9,7 +9,7 @@
     "stock": 35
   },
   {
-    "id": 1,
+    "id": "1",
     "title": "Pepsi",
     "description": "Bebida gaseosa marca: Pepsi, botella 2.25lts",
     "price": 850,
@@ -18,7 +18,7 @@
     "stock": 100
   },
   {
-    "id": 2,
+    "id": "2",
     "title": "Gancia Pomelo",
     "description": "Bebida con alcohol sabor pomelo marca: Gancia, lata 500ml",
     "price": 420,
@@ -27,7 +27,7 @@
     "stock": 100
   },
   {
-    "id": 3,
+    "id": "3",
     "title": "Fernet Branca",
     "description": "Bebida con alcohol marca: Branca, botella 1lts",
     "price": 1950,
@@ -36,7 +36,7 @@
     "stock": 150
   },
   {
-    "id": 4,
+    "id": "4",
     "title": "Alfajor triple",
     "description": "Alfajor de dulce de leche con baño de chocolate marca: Jorgito 90gr",
     "price": 250,
@@ -45,7 +45,7 @@
     "stock": 25
   },
   {
-    "id": 5,
+    "id": "5",
     "title": "Barra de chocolate",
     "description": "Chocolate con leche marca: Milka 60g",
     "price": 230,
@@ -54,7 +54,7 @@
     "stock": 250
   },
   {
-    "id": 6,
+    "id": "6",
     "title": "Gomitas surtidas",
     "description": "Gomitas frutales marca Yummy 50gr",
     "price": 99,
@@ -63,12 +63,21 @@
     "stock": 110
   },
   {
-    "id": 7,
+    "id": "7",
     "title": "Fernet Branca",
     "description": "Bebida con alcohol marca Branca, botella 2lts",
     "price": 3250,
     "thumbnail": "Imagen1",
     "code": "fsdf86sdf0db44",
     "stock": 190
+  },
+  {
+    "id": "0a43ed13-9b44-4b95-886c-98263dc5ab83",
+    "title": "Marroc",
+    "description": "Bocadito de avellana marca Felfort",
+    "price": 350,
+    "thumbnail": "",
+    "code": "marrocFelfort_1",
+    "stock": 1000
   }
 ]

@@ -1,11 +1,6 @@
 
-import fs from 'fs';
 import crypto from 'crypto';
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import utils from '../utils.js';
 
 export class ProductManager{
     products;
@@ -17,13 +12,13 @@ export class ProductManager{
 
     // Agregar producto
 
-    async addProduct(title, description, price, thumbnail, code, stock){
-        if (!title || !description || !price || !thumbnail || !code || !code || !stock) {
+    async addProduct(title, description, price, code, stock, thumbnail){
+        if (!title || !description || !price || !code || !stock) {
             throw new Error("Error: debés completar todos los campos del producto a agregar")  
         }
 
         try{
-            let data =  await readFile(this.path);
+            let data =  await utils.readFile(this.path);
             this.products = data?.length > 0 ? data : [];
             } catch (error) {
             console.log(error);
@@ -48,7 +43,7 @@ export class ProductManager{
         this.products.push(product);
 
         try {
-            await writeFile(this.path, this.products);
+            await utils.writeFile(this.path, this.products);
           } catch (error) {
             console.log(error);
           }
@@ -57,7 +52,7 @@ export class ProductManager{
     // Ver todos los productos
     async getProducts(){
         try {
-            let data = await readFile(this.path);
+            let data = await utils.readFile(this.path);
             this.products = data?.length > 0 ? data : [];
             return this.products;
           } catch (error) {
@@ -68,7 +63,7 @@ export class ProductManager{
     // Ver un producto
     async getProductById(id){
         try {
-            let dataproducts = await readFile(this.path);
+            let dataproducts = await utils.readFile(this.path);
             this.products = dataproducts?.length > 0 ? dataproducts : [];
             let product = this.products.find(prod => prod.id == id);
       
@@ -96,7 +91,7 @@ export class ProductManager{
               ...updatedFields,
             };
 
-            await writeFile(this.path, this.products);
+            await utils.writeFile(this.path, this.products);
             
             return {
               mensaje: "Producto actualizado",
@@ -113,7 +108,7 @@ export class ProductManager{
       }
 
     async deleteProductById(id) {
-          let dataproducts = await readFile(this.path);
+          let dataproducts = await utils.readFile(this.path);
           this.products = dataproducts?.length > 0 ? dataproducts : [];
           
           let productIndex = this.products.findIndex(prod => prod.id === id);
@@ -121,7 +116,7 @@ export class ProductManager{
           if (productIndex !== -1) {
             let product = this.products[productIndex];
             this.products.splice(productIndex, 1);
-            writeFile(this.path, this.products);
+            utils.writeFile(this.path, this.products);
             return { mensaje: "Producto eliminado", producto: product };
           }  
             
@@ -129,26 +124,6 @@ export class ProductManager{
     }
 }
 
-// Funciones de READ | WRITE  -----------------------------
-
-async function readFile(file) {
-  try {
-    let result = await fs.promises.readFile(__dirname + "/" + file, "utf-8");
-    let data = await JSON.parse(result);
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-  async function writeFile(file, data) {
-    try {
-      await fs.promises.writeFile(__dirname + "/" + file, JSON.stringify(data));
-      return true;
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
 // -------------------------------------------------------------
 
