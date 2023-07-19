@@ -5,8 +5,12 @@ import { dirname } from 'path';
 
 // Funciones de READ | WRITE  -----------------------------
 
-export const __filename = fileURLToPath(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename);
+
+console.log("filename: " + __filename);
+console.log("dirname: " + __dirname);
+
 
 async function readFile(file) {
     try {

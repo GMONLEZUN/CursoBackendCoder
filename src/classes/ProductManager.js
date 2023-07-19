@@ -13,7 +13,7 @@ export class ProductManager{
     // Agregar producto
 
     async addProduct(title, description, price, code, stock, thumbnail){
-        if (!title || !description || !price || !code || !stock) {
+        if (!title || !description || !price || !stock) {
             throw new Error("Error: debés completar todos los campos del producto a agregar")  
         }
 
