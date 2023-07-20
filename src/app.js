@@ -13,6 +13,8 @@ import { ProductManager } from "./classes/ProductManager.js";
 const app = express();
 const PORT = 8080;
 
+const productManager = new ProductManager('/productos.json')
+
 // Configurar el middleware para manejar las solicitudes JSON
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -24,7 +26,12 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", `${__dirname}/views`);
 
-app.use("/", realtimeRouter);
+app.get("/", async (req, res) => {
+    let products = await productManager.getProducts();
+    res.render("home", {products});
+})
+
+app.use("/realtimeproducts", realtimeRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
 
@@ -36,18 +43,18 @@ const socketServer = new Server(httpServer);
 
 socketServer.on("connection", socket => {
     console.log("Nuevo cliente conectado");
-    const productManager = new ProductManager('/productos.json')
     socket.on("addProduct", async newProduct => {
         await productManager.addProduct(newProduct.title, newProduct.description, newProduct.price, newProduct.code, newProduct.stock, newProduct.thumbnail);
         // Agregar el nuevo producto a la lista de productos
         let products = await productManager.getProducts();
-        console.log(products)
         socket.emit("updateList", products);
       });
     
     socket.on("deleteProduct", async idProd =>{
-        await productManager.deleteProductById(idProd.id);
+        const messageDel = await productManager.deleteProductById(idProd.id);
+        console.log(messageDel)
         let products = await productManager.getProducts();
+        console.log("array post delete"+products)
         socket.emit("updateList", products);
     })
     socket.on("disconnect", () => {

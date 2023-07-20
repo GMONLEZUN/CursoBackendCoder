@@ -9,17 +9,27 @@ const productStock = document.getElementById("productStock");
 
 const deleteBtns = document.querySelectorAll('.btnEliminar');
 
-document.getElementById('productForm').addEventListener('submit',e =>{
+const form = document.getElementById('productForm');
+
+form.addEventListener('submit',e =>{
     e.preventDefault();
-   
-    socket.emit("addProduct",{
+    if (productTitle.value =="" || productDescription.value =="" || productPrice.value =="" || productCode.value =="" || productStock.value =="" ) {
+      let errorMessage = document.createElement('DIV')
+      errorMessage.innerHTML= `
+        <p style="color:red; margin-top: 15px"> Debés completar todos los campos </p>
+      `;
+      form.appendChild(errorMessage);
+    } else {
+      socket.emit("addProduct",{
         title: productTitle.value,
         description: productDescription.value,
         price: productPrice.value,
         thumbnail: productThumbnail.value,
         code: productCode.value,
-        stock: productStock
-    })
+        stock: productStock.value
+      })
+    }
+  
     
     productTitle.value = "";
     productDescription.value = "";
@@ -49,14 +59,13 @@ deleteBtns.forEach(btn => {
 function updateProductList(products) {
     const productList = document.getElementById("productList");
     productList.innerHTML = "";
-  
     products.forEach((product) => {
       const li = document.createElement("li");
       li.innerHTML = `
-        <p>Título: ${product.title}</p>
+        <h3>${product.title}</h3>
         <p>Descripción: ${product.description}</p>
         <p>Precio: ${product.price}</p>
-        <p>Thumbnail: ${product.thumbnail}</p>
+        <img src=${product.thumbnail} />
         <button class="btnEliminar" data-id="${product.id}">Eliminar</button>
       `;
   

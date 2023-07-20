@@ -16,7 +16,9 @@ export class ProductManager{
         if (!title || !description || !price || !stock) {
             throw new Error("Error: debés completar todos los campos del producto a agregar")  
         }
-
+        if (thumbnail == "") {
+          thumbnail = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
+        }
         try{
             let data =  await utils.readFile(this.path);
             this.products = data?.length > 0 ? data : [];

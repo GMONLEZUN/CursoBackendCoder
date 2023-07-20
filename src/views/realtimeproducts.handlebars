@@ -57,10 +57,10 @@
   <ul id="productList">
       {{#each products}}
         <li>
-          <p>Título: {{title}}</p>
+          <h3>{{title}}</h3>
           <p>Descripción: {{description}}</p>
-          <p>Precio: ${{price}}</p>
           <img src={{thumbnail}} />
+          <p>Precio: ${{price}}</p>
           <button class="btnEliminar" data-id="{{id}}">Eliminar</button>
         </li>
       {{/each}}
@@ -68,3 +68,5 @@
   </ul>
 
 </div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="./js/index.js"></script>

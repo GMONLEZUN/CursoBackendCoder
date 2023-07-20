@@ -8,10 +8,6 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename);
 
-console.log("filename: " + __filename);
-console.log("dirname: " + __dirname);
-
-
 async function readFile(file) {
     try {
       let result = await fs.promises.readFile(__dirname + "/" + file, "utf-8");
