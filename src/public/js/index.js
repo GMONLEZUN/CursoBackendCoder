@@ -66,7 +66,7 @@ function updateProductList(products) {
         <p>Descripción: ${product.description}</p>
         <p>Precio: ${product.price}</p>
         <img src=${product.thumbnail} />
-        <button class="btnEliminar" data-id="${product.id}">Eliminar</button>
+        <button class="btnEliminar" data-id="${product._id}">Eliminar</button>
       `;
   
       // Agregar el evento de clic al botón de eliminación
@@ -84,3 +84,5 @@ function updateProductList(products) {
       productList.appendChild(li);
     });
   }
+
+

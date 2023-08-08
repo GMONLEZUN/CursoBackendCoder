@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { ProductManager } from "../classes/ProductManager.js";
-import { CartManager } from "../classes/CartManager.js";
+import { ProductManager } from "../dao/dbManagers/DBproductManager.js"
+import { CartManager } from "../dao/dbManagers/DBcartManager.js"
 
 const router = Router();
 
-const productManager = new ProductManager('productos.json');
-const cartManager = new CartManager('carts.json');
+const productManager = new ProductManager();
+const cartManager = new CartManager();
 
 
 router.post("/", async(req, res)=>{
@@ -44,7 +44,7 @@ router.post('/:cid/product/:pid', async (req, res)=>{
         const {qty} = req.body
         const product = await productManager.getProductById(pid);
         const cart = await cartManager.getCartById(cid);
-        cartManager.addProductToCart(cart.id, product.id, qty)
+        cartManager.addProductToCart(cart[0], product[0], qty)
         res.json({
             message: "Producto agregado correctamente",
             producto: product,
@@ -54,6 +54,20 @@ router.post('/:cid/product/:pid', async (req, res)=>{
         res.status(500).json({error: error})
     }
     
+})
+
+router.delete('/:cid', async (req,res)=>{
+    try{
+        const {cid} = req.params;
+        const response = await cartManager.deleteCartById(cid);
+        res.json({
+            message: "Carrito eliminado",
+            cartID: cid,
+            respuesta: response
+        })
+    } catch (error){
+        res.status(500).json({error})
+    }
 })
 
 export default router;

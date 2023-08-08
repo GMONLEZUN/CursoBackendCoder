@@ -1,12 +1,13 @@
 import { Router } from "express";
-import { ProductManager } from "../classes/ProductManager.js";
+import { ProductManager } from "../dao/dbManagers/DBproductManager.js"
 
 const router = Router();
 
-const productManager = new ProductManager('productos.json')
+const productManager = new ProductManager()
 
 router.get('/', async (req,res)=>{
     const { limit } = req.query;
+    
     try {
       let response = await productManager.getProducts();
       
@@ -25,7 +26,7 @@ router.get('/', async (req,res)=>{
 router.get("/:pid", async (req, res) => {
     const { pid } = req.params;
   
-    let product = await productManager.getProductById(parseInt(pid));
+    let product = await productManager.getProductById(pid);
   
     if (product) {
       res.json({ message: "success", data: product });
@@ -45,13 +46,20 @@ router.post("/", async(req, res)=>{
         stock,
         thumbnail
     } = req.body;
-
     if (!title || !description || !code || !price || !stock) {
         res.json({ message: "Datos incompletos" });
       } else { 
         
         try {
-            const response = await productManager.addProduct(title, description, price, code, stock, thumbnail || "");
+            let productToAdd = {
+                title,
+                description,
+                price,
+                code,
+                stock,
+                thumbnail,
+            }
+            const response = await productManager.addProduct(productToAdd);
             res.json({
                 message: "Producto agregado correctamente",
                 data: response

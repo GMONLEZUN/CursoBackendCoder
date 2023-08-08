@@ -129,12 +129,12 @@ export class ProductManager{
 
 // -------------------------------------------------------------
 
-// // Prueba del código
+// Prueba del código
 
 // const almacen = new ProductManager('./productos_almacen.json');
 // const kiosko = new ProductManager('./productos_kiosko.json');
 
-// // Agrego los productos
+// Agrego los productos
 
 // almacen.addProduct("Agua","Agua mineral sin gas marca: Villa del Sur, botella 500ml", 250, "Imagen1","4fx2654fx154",35);
 // almacen.addProduct("Pepsi","Bebida gaseosa marca: Pepsi, botella 2.25lts", 850, "Imagen1","4fx2660fb164",100);
@@ -147,20 +147,20 @@ export class ProductManager{
 // kiosko.addProduct("Fernet Branca","Bebida con alcohol marca Branca, botella 2lts", 3250, "Imagen1","fsdf86sdf0db44",190);
 
 
-// // Ver los productos
+// Ver los productos
 
 // console.log(almacen.getProducts());
 // console.log(kiosko.getProducts());
 
-// // cambiar por un id Válido al momento de generar los json.
+// cambiar por un id Válido al momento de generar los json.
 // let idProd = '5bb0e3e4-27c9-4701-b5c3-038108494bbb'
-// // ---------------------
+// ---------------------
 
-// // Ver un producto por id.
+// Ver un producto por id.
 
 // console.log(almacen.getProductById(idProd));
 
-// // Actualizar un producto
+// Actualizar un producto
 
 // const updatedFields = {
 //     title: "Agua con gas",
@@ -171,7 +171,7 @@ export class ProductManager{
 
 // console.log(almacen.getProductById(idProd));
 
-// // Borrar un producto
+// Borrar un producto
 
 // console.log(almacen.deleteProductById(idProd));
 

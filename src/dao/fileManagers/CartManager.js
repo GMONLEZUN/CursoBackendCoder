@@ -1,6 +1,6 @@
 
 import crypto from 'crypto';
-import utils from '../utils.js';
+import utils from '../../utils.js';
 
 export class Cart{
   constructor(){

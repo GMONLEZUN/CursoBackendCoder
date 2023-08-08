@@ -61,12 +61,14 @@
           <p>Descripción: {{description}}</p>
           <img src={{thumbnail}} />
           <p>Precio: ${{price}}</p>
-          <button class="btnEliminar" data-id="{{id}}">Eliminar</button>
+          <button class="btnEliminar" data-id="{{_id}}">Eliminar</button>
         </li>
       {{/each}}
 
   </ul>
 
+
 </div>
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="./js/index.js"></script>
