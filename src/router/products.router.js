@@ -6,18 +6,34 @@ const router = Router();
 const productManager = new ProductManager()
 
 router.get('/', async (req,res)=>{
-    const { limit } = req.query;
+    let  limitSet = req.query.limit ;
+    let  pageSet = req.query.page ;
+    
+    if (!limitSet){
+        limitSet = 10
+    }
+    if (!pageSet){
+        pageSet = 1
+    }
     
     try {
-      let response = await productManager.getProducts();
+        const respuesta = await productManager.getProducts(limitSet, pageSet);
+        
+        const { docs, hasPrevPage, hasNextPage, nextPage, prevPage, limit, totalDocs, totalPages } = respuesta.response;
+        const products = docs;
       
-      if (limit) {
-        let tempArray = response.filter((data, index) => index < limit);
-        res.json({ data: tempArray, limit: limit, quantity: tempArray.length });
-      } else {
-        res.json({ data: response, limit: false, quantity: response.length });
+        res.render( "products", {
+            products,
+            hasPrevPage,
+            hasNextPage,
+            prevPage,
+            nextPage,
+            limit,
+            totalDocs,
+            totalPages
+          });
     }
-    } catch (err) {
+     catch (err) {
         console.log(err);
         res.json({ data: err });
     }

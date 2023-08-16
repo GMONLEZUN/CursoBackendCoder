@@ -7,7 +7,7 @@ const realtimeRouter = Router();
 const productManager = new ProductManager()
 
 realtimeRouter.get("/", async (req, res) => {
-  const products = await productManager.getProducts();
+  const products = await productManager.getProductsRealtime();
   res.render("realtimeproducts", { products });
 });
 

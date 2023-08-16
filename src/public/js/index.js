@@ -11,6 +11,8 @@ const deleteBtns = document.querySelectorAll('.btnEliminar');
 
 const form = document.getElementById('productForm');
 
+
+
 form.addEventListener('submit',e =>{
     e.preventDefault();
     if (productTitle.value =="" || productDescription.value =="" || productPrice.value =="" || productCode.value =="" || productStock.value =="" ) {
@@ -54,6 +56,7 @@ deleteBtns.forEach(btn => {
           });
     })
 });
+
 
 // Actualizar la lista de productos
 function updateProductList(products) {

@@ -44,8 +44,8 @@ app.get("/", async (req, res) => {
 })
 
 app.use("/realtimeproducts", realtimeRouter);
-app.use("/api/products", productRouter);
-app.use("/api/cart", cartRouter);
+app.use("/products", productRouter);
+app.use("/cart", cartRouter);
 app.use("/chat", chatRouter);
 
 const httpServer = app.listen(PORT, (e)=>{
@@ -61,12 +61,12 @@ socketServer.on("connection", socket => {
     socket.on("addProduct", async newProduct => {
         await productManager.addProduct(newProduct);
         // Agregar el nuevo producto a la lista de productos
-        let products = await productManager.getProducts();
+        let products = await productManager.getProductsRealtime();
         socket.emit("updateList", products);
     });
     socket.on("deleteProduct", async idProd =>{
         await productManager.deleteProductById(idProd.id);
-        let products = await productManager.getProducts();
+        let products = await productManager.getProductsRealtime();
         socket.emit("updateList", products);
     })
     socket.on('newUserConnected', user=>{

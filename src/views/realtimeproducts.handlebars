@@ -53,6 +53,7 @@
 
     <button type="submit">Agregar</button>
   </form>
+  
   <h2>Productos agregados</h2>
   <ul id="productList">
       {{#each products}}
@@ -61,13 +62,12 @@
           <p>Descripción: {{description}}</p>
           <img src={{thumbnail}} />
           <p>Precio: ${{price}}</p>
+          <button class="btnAddToCart" data-id="{{_id}}">Agregar al carrito</button>
           <button class="btnEliminar" data-id="{{_id}}">Eliminar</button>
         </li>
       {{/each}}
 
   </ul>
-
-
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

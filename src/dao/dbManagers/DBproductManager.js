@@ -1,10 +1,14 @@
 import { productsModel } from "../models/products.model.js";
 
 export class ProductManager {
-    async getProducts() {
+    async getProducts(limitProd, pageProd) {
+      const response = await productsModel.paginate({},{limit:limitProd, page:pageProd, lean:true})
+      
+      return {response};
+    }
+    async getProductsRealtime(){
       return await productsModel.find({}).lean();
     }
-
     async getProductById(id) {
       return await productsModel.find({ _id: id });
     }

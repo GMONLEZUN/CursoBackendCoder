@@ -1,0 +1,16 @@
+<div>
+  <h1>Carrito</h1>
+  <ul>
+    <p>
+       {{#each cart}}
+                {{#each this.products}}
+                  <p>{{this.productId}}</p>
+                  <p>{{this.quantity}}</p>
+                {{/each}}
+        {{/each}}
+    </p>
+
+  </ul>
+</div>
+
+<script src="./js/cart.js"></script>

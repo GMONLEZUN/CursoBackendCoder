@@ -1,0 +1,28 @@
+<div>
+ 
+  <h2>Productos</h2>
+  <button id="limit">limit 3 prod</button>
+  <ul id="productList">
+      {{#each products}}
+        <li>
+          <h3>{{this.title}}</h3>
+          <p>Descripción: {{this.description}}</p>
+          <img src={{this.thumbnail}} />
+          <p>Precio: ${{this.price}}</p>
+          <button class="btnAddToCart" data-id="{{this._id}}">Agregar al carrito</button>
+        </li>
+      {{/each}}
+       {{#if hasPrevPage}}
+          <a href="/products?limit={{limit}}&page={{prevPage}}"><button>Anterior</button></a>
+        {{/if}}
+
+        {{#if hasNextPage}}
+          <a href="/products?limit={{limit}}&page={{nextPage}}"><button>Siguiente</button></a>
+        {{/if}}
+
+  </ul>
+  <button class="viewCart">Ir al carrito</button>
+
+</div>
+
+<script src="./js/cart.js"></script>

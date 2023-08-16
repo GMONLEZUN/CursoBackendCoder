@@ -27,9 +27,10 @@ router.get("/:cid", async (req, res) => {
     try {
         const {cid} = req.params;
         const cart = await cartManager.getCartById(cid);
-        res.json({
-            data: cart
-        })  
+        // res.json({
+        //     data: cart
+        // })  
+        res.render("cart", {cart})
     } catch (error) {
         res.status(500).json({error: error})
     }
@@ -37,14 +38,13 @@ router.get("/:cid", async (req, res) => {
   });
 
 
-
 router.post('/:cid/product/:pid', async (req, res)=>{
     try {
         const {cid, pid} = req.params;
-        const {qty} = req.body
+        // const {qty} = req.body
         const product = await productManager.getProductById(pid);
         const cart = await cartManager.getCartById(cid);
-        cartManager.addProductToCart(cart[0], product[0], qty)
+        cartManager.addProductToCart(cart[0], product[0])
         res.json({
             message: "Producto agregado correctamente",
             producto: product,
