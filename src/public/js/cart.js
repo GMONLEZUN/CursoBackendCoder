@@ -37,10 +37,59 @@ viewCart.addEventListener('click', e => {
 })
 
 
+const sortNone = document.getElementById('sin');
+const sortMayor = document.getElementById('mayor');
+const sortMenor = document.getElementById('menor');
 
 const limit = document.getElementById('limit');
 
 limit.addEventListener('click', async e =>{
+    if(limit.checked){
+        if (sortNone.checked) {
+            window.location.href = '/products?limit=3&sorted=0'
+        } else if (sortMayor.checked){
+            window.location.href = '/products?limit=3&sorted=-1'
+        } else {
+            window.location.href = '/products?limit=3&sorted=1'
+        }
+    } else {
+        if (sortNone.checked) {
+            window.location.href = '/products?&sorted=0'
+        } else if (sortMayor.checked){
+            window.location.href = '/products?&sorted=-1'
+        } else {
+            window.location.href = '/products?&sorted=1'
+        }
+    }
+})
 
-  window.location.href = '/products?limit=3'
+sortNone.addEventListener('click', e=>{
+    if (limit.checked) {
+        window.location.href = '/products?limit=3&sorted=0';
+    } else {
+        window.location.href = '/products?sorted=0';
+    }
+})
+
+sortMayor.addEventListener('click', e=>{
+    if (limit.checked) {
+        window.location.href = '/products?limit=3&sorted=-1';
+    } else {
+        window.location.href = '/products?sorted=-1';
+    }
+})
+
+sortMenor.addEventListener('click', e=>{
+    if (limit.checked) {
+        window.location.href = '/products?limit=3&sorted=1';
+    } else {
+        window.location.href = '/products?sorted=1';
+    }
+})
+
+const searchForm = document.getElementById('searchForm');
+
+searchForm.addEventListener('change', e =>{
+    let value = e.target.value;
+    window.location.href = `/products?search=${value}`
 })

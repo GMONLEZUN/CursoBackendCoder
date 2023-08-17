@@ -1,7 +1,50 @@
 <div>
  
   <h2>Productos</h2>
-  <button id="limit">limit 3 prod</button>
+  {{#if limit3}}
+  <input type="checkbox" id="limit" value="limit_checkbox" checked/>
+  {{else}}
+  <input type="checkbox" id="limit" value="limit_checkbox"/>
+  {{/if}}
+
+  <label for="limit">3 Productos</label>
+  <fieldset>
+    <legend>Ordenar:</legend>
+
+    <div>
+      {{#if noSort}}
+        <input type="radio" id="sin" name="sort" value="0" checked />
+      {{else}}
+        <input type="radio" id="sin" name="sort" value="0" />
+      {{/if}}
+      <label for="sin">Sin ordenar</label>
+    </div>
+
+    <div>
+      {{#if mayorSort}}
+        <input type="radio" id="mayor" name="sort" value="-1" checked/>
+      {{else}}
+        <input type="radio" id="mayor" name="sort" value="-1" />
+      {{/if}}
+      <label for="mayor">Mayor a menor</label>
+    </div>
+
+    <div>
+    {{#if menorSort}}
+      <input type="radio" id="menor" name="sort" value="1" checked/>
+    {{else}}
+      <input type="radio" id="menor" name="sort" value="1" />
+    {{/if}}
+      <label for="menor">Menor a mayor</label>
+    </div>
+
+  </fieldset>
+
+  <form action="" id="searchForm">
+    <input type="text" name="search" id="searchInput">
+    <button type="submit" id="btnSubmit">Buscar</button>
+  </form>
+
   <ul id="productList">
       {{#each products}}
         <li>
@@ -13,11 +56,27 @@
         </li>
       {{/each}}
        {{#if hasPrevPage}}
-          <a href="/products?limit={{limit}}&page={{prevPage}}"><button>Anterior</button></a>
+          {{#if noSort}}
+            <a href="/products?limit={{limit}}&page={{prevPage}}&sorted=0"><button>Anterior</button></a>
+          {{/if}}
+          {{#if mayorSort}}
+            <a href="/products?limit={{limit}}&page={{prevPage}}&sorted=-1"><button>Anterior</button></a>
+          {{/if}}
+          {{#if menorSort}}
+            <a href="/products?limit={{limit}}&page={{prevPage}}&sorted=1"><button>Anterior</button></a>
+          {{/if}}
         {{/if}}
 
         {{#if hasNextPage}}
-          <a href="/products?limit={{limit}}&page={{nextPage}}"><button>Siguiente</button></a>
+          {{#if noSort}}
+            <a href="/products?limit={{limit}}&page={{nextPage}}&sorted=0"><button>Siguiente</button></a>
+          {{/if}}
+          {{#if mayorSort}}
+            <a href="/products?limit={{limit}}&page={{nextPage}}&sorted=-1"><button>Siguiente</button></a>
+          {{/if}}
+          {{#if menorSort}}
+            <a href="/products?limit={{limit}}&page={{nextPage}}&sorted=1"><button>Siguiente</button></a>
+          {{/if}}
         {{/if}}
 
   </ul>

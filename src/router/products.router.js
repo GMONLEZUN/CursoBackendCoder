@@ -6,8 +6,10 @@ const router = Router();
 const productManager = new ProductManager()
 
 router.get('/', async (req,res)=>{
-    let  limitSet = req.query.limit ;
-    let  pageSet = req.query.page ;
+    let  limitSet = req.query.limit;
+    let  pageSet = req.query.page;
+    let sortSet = req.query.sorted;
+    let value = req.query.search
     
     if (!limitSet){
         limitSet = 10
@@ -16,12 +18,32 @@ router.get('/', async (req,res)=>{
         pageSet = 1
     }
     
+    
     try {
-        const respuesta = await productManager.getProducts(limitSet, pageSet);
+
+        const respuesta = await productManager.getProducts(limitSet, pageSet, sortSet, value);
         
         const { docs, hasPrevPage, hasNextPage, nextPage, prevPage, limit, totalDocs, totalPages } = respuesta.response;
         const products = docs;
-      
+        
+        let noSort = false;
+        let mayorSort = false;
+        let menorSort = false;
+        let limit3 = false;
+        let limit10 = false;
+
+        limit==3 ? limit3 = true : limit10=true; 
+        
+        if (respuesta.sortProd == 0) {
+            noSort = true;
+        }
+        if (respuesta.sortProd == -1) {
+            mayorSort = true;
+        }
+        if (respuesta.sortProd == 1) {
+            menorSort = true;
+        }
+
         res.render( "products", {
             products,
             hasPrevPage,
@@ -29,8 +51,11 @@ router.get('/', async (req,res)=>{
             prevPage,
             nextPage,
             limit,
+            limit3,
+            limit10,
             totalDocs,
-            totalPages
+            totalPages,
+            noSort, mayorSort, menorSort
           });
     }
      catch (err) {

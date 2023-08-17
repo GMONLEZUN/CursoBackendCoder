@@ -1,10 +1,23 @@
 import { productsModel } from "../models/products.model.js";
 
 export class ProductManager {
-    async getProducts(limitProd, pageProd) {
-      const response = await productsModel.paginate({},{limit:limitProd, page:pageProd, lean:true})
+    async getProducts(limitProd, pageProd, sortProd, value) {
       
-      return {response};
+      let options;
+      sortProd != 0 ? options = {limit:limitProd, page:pageProd, sort: { price: sortProd }, lean: true} : options = {limit:limitProd, page:pageProd, lean:true};
+  
+      try{
+        let response;
+        if (value) {
+          response = await productsModel.paginate({title: {$regex: `${value}`, $options: 'i'}},options)
+        } else {
+          response = await productsModel.paginate({},options)
+        }
+        return {response , sortProd};
+      } catch {
+        e => console.log(e)
+      }
+      
     }
     async getProductsRealtime(){
       return await productsModel.find({}).lean();
@@ -14,17 +27,17 @@ export class ProductManager {
     }
   
     async addProduct(data) {
-      const res = productsModel.create(data);
+      const res = await productsModel.create(data);
       return res;
     }
   
     async updateProductById(id, data) {
-      const res = productsModel.findByIdAndUpdate(id, data);
+      const res = await productsModel.findByIdAndUpdate(id, data);
       return res;
     };
 
     async deleteProductById(id){
-      const res = productsModel.findByIdAndDelete(id);
+      const res = await productsModel.findByIdAndDelete(id);
       return res;
     };
   }

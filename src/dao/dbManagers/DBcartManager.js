@@ -7,7 +7,7 @@ export class CartManager {
     }
   
     async addCart() {
-      const res = cartsModel.create({products: []});
+      const res = await cartsModel.create({products: []});
       return res;
     }
   
@@ -38,8 +38,44 @@ export class CartManager {
     };
 
     async deleteCartById(id){
-      const res = cartsModel.findByIdAndDelete(id);
+      const res = await cartsModel.findByIdAndDelete(id);
       return res;
     };
+
+    async deleteProductOfCart(cid, pid){
+      const cart = await cartsModel.findById(cid);
+      const res = await cartsModel.findByIdAndUpdate(
+         cart ,
+        { $pull: { products: {productId : pid } } },
+        { new: true }
+      )
+      return res;
+    }
+
+    async updateQtyProdCart(cid, pid, qty) {
+
+        const res = await cartsModel.findOneAndUpdate(
+          { _id: cid, 'products.productId': pid }, 
+          { $set: { 'products.$.quantity': qty } }, 
+          { new: true }
+        );   
+      return res;
+    }
+
+    async updateArrCart(cid, newProducts){  
+      const cart = await cartsModel.findById(cid);
+      const res = await cartsModel.findByIdAndUpdate(
+          cart._id,
+          {$push: {
+            products: {
+              $each: [...newProducts]  
+            }
+          }},
+          { new: true }
+        );
+        return res;
+    }
+
   }
   
+ 
