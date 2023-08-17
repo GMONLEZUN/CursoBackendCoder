@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "3eb33483-9002-4f1b-b0c9-c46e3270b812",
+		"name": "BackendCoderHouse-2-Preentrega",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28474608"
+	},
+	"item": [
+		{
+			"name": "All products",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/products",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/products/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\":\"Marroc\",\r\n    \"description\": \"Bocadito de avellana marca Felfort\",\r\n    \"price\": 258,\r\n    \"code\": \"marrocFelfort_1\",\r\n    \"stock\": 1000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/products",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modify product",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"price\":350\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/products/0a43ed13-9b44-4b95-886c-98263dc5ab83",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products",
+						"0a43ed13-9b44-4b95-886c-98263dc5ab83"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/products/64d162b7da5870c6c7c097d8",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products",
+						"64d162b7da5870c6c7c097d8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New cart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/cart",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add product to cart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/cart/c4a060c5-d88c-4faf-9019-3d31ec150c63/product/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cart",
+						"c4a060c5-d88c-4faf-9019-3d31ec150c63",
+						"product",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products of cart by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/cart/64d18915ffb739fc1dd8bba4",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cart",
+						"64d18915ffb739fc1dd8bba4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete cart",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cart/64d18a77cecf5440fa526a12",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cart",
+						"64d18a77cecf5440fa526a12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product of Cart",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cart/64dc14c6e61c515c61e38ca8/product/64dc479d1553f1dfa5625ee1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cart",
+						"64dc14c6e61c515c61e38ca8",
+						"product",
+						"64dc479d1553f1dfa5625ee1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update quantity of Product in Cart",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"qty\" : 48\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/cart/64dc14c6e61c515c61e38ca8/product/64d1662ada5870c6c7c097e2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cart",
+						"64dc14c6e61c515c61e38ca8",
+						"product",
+						"64d1662ada5870c6c7c097e2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add array of Prod to Cart",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"productId\":\"64dc46571553f1dfa5625ecc\",\r\n        \"quantity\": 3\r\n    },\r\n    {\r\n        \"productId\":\"64dc46961553f1dfa5625ecf\",\r\n        \"quantity\": 9\r\n    },\r\n    {\r\n        \"productId\":\"64dc46b51553f1dfa5625ed2\",\r\n        \"quantity\": 15\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/cart/64dc14c6e61c515c61e38ca8",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cart",
+						"64dc14c6e61c515c61e38ca8"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
