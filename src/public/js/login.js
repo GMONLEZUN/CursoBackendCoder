@@ -23,12 +23,11 @@ loginForm.addEventListener("submit", async e => {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
   const response = await postLogin(username, password);
-  console.log({response})
-  // if(response.status == 'ok'){
-  //   window.location.href = '/products';
-  // } else {
-  //   window.location.href = '/signup'
-  // }
+  if(response.status == 'ok'){
+    window.location.href = '/products';
+  } else {
+    window.location.href = '/signup'
+  }
 });
 
 

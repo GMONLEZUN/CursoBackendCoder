@@ -27,7 +27,7 @@ const initializePassport = async () =>{
             }
         }
     ))
-    passport.use('login', new localStrategy({ usernameField: "email"}, async(username, password, done)=>{
+    passport.use('login', new localStrategy(async(username, password, done)=>{
         try {
             const user = await UserModel.findOne({email: username})
             if (!user) {
