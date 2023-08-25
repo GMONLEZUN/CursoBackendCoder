@@ -93,3 +93,15 @@ searchForm.addEventListener('change', e =>{
     let value = e.target.value;
     window.location.href = `/products?search=${value}`
 })
+
+const logout = document.querySelector('.logout');
+
+logout.addEventListener('click', async (e)=>{
+    const res = await fetch(`/api/session/logout`, {
+        method:"GET"
+    });
+    console.log(res)
+    if(res.ok){
+        window.location.href = '/'
+    }
+})

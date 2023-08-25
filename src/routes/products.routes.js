@@ -1,15 +1,18 @@
 import { Router } from "express";
 import { ProductManager } from "../dao/dbManagers/DBproductManager.js"
+import { auth } from "./session.routes.js";
 
 const router = Router();
 
 const productManager = new ProductManager()
 
-router.get('/', async (req,res)=>{
-    let  limitSet = req.query.limit;
-    let  pageSet = req.query.page;
-    let sortSet = req.query.sorted;
-    let value = req.query.search
+
+router.get('/', auth, async (req,res)=>{
+    let username = req.session.username;
+    let limitSet = req.query.limit;
+    let pageSet = req.query.page;
+    let sortSet = req.query.sorted || 1;
+    let value = req.query.search || "";
     
     if (!limitSet){
         limitSet = 10
@@ -55,7 +58,8 @@ router.get('/', async (req,res)=>{
             limit10,
             totalDocs,
             totalPages,
-            noSort, mayorSort, menorSort
+            noSort, mayorSort, menorSort,
+            username
           });
     }
      catch (err) {

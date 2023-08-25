@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import bcrypt from 'bcrypt';
 
 
 // Funciones de READ | WRITE  -----------------------------
@@ -26,5 +27,9 @@ async function writeFile(file, data) {
     console.log(err);
     };
 }
+
+export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+
+export const isValidPassword = (savedPassword, password) => bcrypt.compareSync(password, savedPassword)
 
 export default { readFile, writeFile }

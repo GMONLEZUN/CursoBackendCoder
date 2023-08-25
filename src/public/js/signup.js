@@ -7,7 +7,6 @@ async function postSignup(first_name, last_name, age, username, password) {
     password,
   };
 
-  console.log("all  the data", data);
   const response = await fetch("/api/session/signup", {
     method: "POST",
     headers: {
@@ -22,16 +21,21 @@ async function postSignup(first_name, last_name, age, username, password) {
 
 const signupForm = document.getElementById("signup-form");
 
-signupForm.addEventListener("submit", function (event) {
-  console.log("tracking");
-  event.preventDefault();
+signupForm.addEventListener("submit", async e => {
+  e.preventDefault();
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
   const first_name = document.getElementById("first_name").value;
   const last_name = document.getElementById("last_name").value;
   const age = document.getElementById("age").value;
 
-  postSignup(first_name, last_name, age, username, password).then((datos) =>
-    console.log(datos)
-  );
+  const res = await postSignup(first_name, last_name, age, username, password) 
+  if (res.status == 'ok'){
+    window.location.href = '/products'
+  }
+  else{
+    window.location.reload();
+  }
+  
+  ;
 });
