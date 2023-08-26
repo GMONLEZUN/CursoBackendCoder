@@ -78,6 +78,18 @@ router.post("/forgot", async (req, res) => {
   }
 });
 
+
+router.get('/github', passport.authenticate('github',
+  { scope:['user:email'] }), async (req,res) => {})
+
+router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/login'}),
+  async (req,res) =>{
+    req.session.username = req.user.email;
+    req.session.admin = true;
+    res.redirect('/products')
+  }
+  )
+
 export default router;
 
 

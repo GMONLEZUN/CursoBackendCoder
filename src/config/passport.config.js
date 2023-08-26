@@ -2,7 +2,14 @@ import passport from "passport";
 import local from "passport-local";
 import UserModel from "../dao/models/users.model.js";
 import { createHash, isValidPassword } from "../utils.js";
+import GitHubStrategy from 'passport-github2';
+import * as dotenv from 'dotenv';
 
+dotenv.config();
+
+const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
+const GITHUB_CALLBACK_URL = process.env.GITHUB_CALLBACK_URL;
 
 const localStrategy = local.Strategy;
 
@@ -46,6 +53,27 @@ const initializePassport = async () =>{
         }
     })
     )
+    passport.use('github', new GitHubStrategy({clientID: GITHUB_CLIENT_ID, clientSecret: GITHUB_CLIENT_SECRET, callbackURL: GITHUB_CALLBACK_URL}, 
+            async (accessToken, refreshToken, profile, done) => {
+            try {
+                let user = await UserModel.findOne({email: profile._json.email}) || await UserModel.findOne({email: `${profile._json.login}@mail.com`})
+                if (!user) {
+                    const newUser = {
+                        first_name: profile._json.login,
+                        last_name: profile._json.login,
+                        age:18,
+                        email: profile._json.email ||`${profile._json.login}@mail.com`,
+                        password:"[]",
+                    }
+                    let result = await UserModel.create(newUser);
+                    return done(null, result);
+                } else {
+                    return done(null, user);
+                }
+            } catch (error) {
+                return done(error)
+            }
+    }))
     
     passport.serializeUser((user,done)=>{
         done(null, user._id);
