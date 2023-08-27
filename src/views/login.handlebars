@@ -1,25 +1,22 @@
-<div class="login-container">
-  <form id="login-form" class="login-form">
-    <h2>Iniciar sesión</h2>
-    <div class="form-group">
-
-      <label for="username">Usuario:</label>
-      <input type="text" id="username" name="username" required />
-    </div>
-    <div class="form-group">
-
-      <label for="password">Contraseña:</label>
-      <input type="password" id="password" name="password" autocomplete="on" required />
-
-    </div>
-    <button id="login" type="submit">Ingresar</button>
-  </form>
-    
-    <div>
-      <a href="/api/session/github"><button>Github</button></a>
-    </div>
-    
+<div class="login-body">
+  <div class="login-container">
+    <form id="login-form" class="login-form">
+        <h2 class="login-title">Login</h2>
+        {{!-- <label for="username">Usuario:</label> --}}
+        <input type="text" id="username" name="username" placeholder="Username/Email" required autofocus/>
+        {{!-- <label for="password">Contraseña:</label> --}}
+        <input type="password" id="password" name="password" autocomplete="on" placeholder="Contraseña" required />
+        <a id="forgotPass">Recuperar contraseña</a>
+        <button id="login" type="submit">Ingresar</button>
+    </form>  
+    <a href="/api/session/github" class="github-link"><i class="fa-brands fa-square-github"></i> Login con GitHub</a>
+    <hr class="login-divider">
     <button id="registrate">Registrate</button>
-    <button id="forgotPass">Recuperar contraseña</button>
+  </div>
+  <div class="logo-container">
+    <img src="/images/grocery-store.jpg" alt="Login image Background">
+  </div>
+    
+
 </div>
 <script src="js/login.js"></script>

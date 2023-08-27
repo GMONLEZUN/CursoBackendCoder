@@ -13,8 +13,8 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 body{
-    padding: 80px;  
-    padding-top: 0;  
+    /* padding: 80px;  
+    padding-top: 0;   */
 }
 
 h1{
@@ -229,3 +229,264 @@ h2{
     text-align: right;
 }
 
+/* ------------ LOGIN ------------ */
+
+.login-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+.login-body img{
+    height: 100%;
+    width: 100%;
+}
+
+.login-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+    margin-top: 180px;
+    max-width: 900px;
+}
+
+.login-container .login-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 10px;
+    width: 70%;
+}
+
+.login-container .login-form input{
+    padding: 8px 5px;
+    outline: none;
+    border: none;
+    border-bottom: 0.5px solid #252525;
+    font-size: 1rem;
+    color: #252525;
+    width: 100%;
+}
+.login-container .login-form input:focus{
+    border-bottom: 1px solid #50a866;
+}
+.login-title{
+    margin-bottom: 25px;
+    color: #252525;
+    font-size: 2rem;
+}
+.login-container #forgotPass{
+    width: 100%;
+    background-color: transparent;
+    color: #252525;
+    text-decoration: underline;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+    cursor: pointer;
+}
+
+.login-container .login-form button{
+    width: 100%;
+    outline: none;
+    background-color: #252525;
+    height: 2rem;
+    font-size: 1rem;
+    color: #fafafa;
+    border: none;
+    margin-bottom: 25px;
+    cursor: pointer;
+}
+
+
+.login-container .login-form button:active{
+    background-color: #2e4b36;
+}
+
+.login-divider{
+    color: #252525;
+    height: 0.5px;
+    width: 60%;
+    margin-bottom: 40px;
+}
+
+.github-link{
+    font-size: 1rem;
+    text-decoration: none;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    color: #252525;
+    margin-bottom: 25px;
+    cursor: pointer;
+}
+
+.login-container .github-link i{
+    font-size: 3rem;
+    text-decoration: none;
+}
+
+.login-container a:visited{
+    color: inherit;
+}
+
+#registrate{
+    font-size: 1rem;
+    border: 0.5px solid #252525;
+    background-color: transparent;
+    outline: none;
+    width: 70%;
+    height: 2rem;
+    cursor: pointer;
+}
+
+#registrate:active{
+    background-color: #c1c2c1;
+}
+
+.logo-container{
+    width: 100%;
+}
+
+/* ------------ Registro ------------ */
+.signup-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+.signup-body .logo-container{
+    height: 100vh;
+    width: 50vw;
+}
+.signup-body .logo-container img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: grayscale(70%);
+}
+
+.signup-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50vw;
+    height: 100%;
+    margin-top: 180px;
+}
+
+.signup-container .signup-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 10px;
+    width: 70%;
+}
+
+.signup-container .signup-form input{
+    padding: 8px 5px;
+    outline: none;
+    border: none;
+    border-bottom: 0.5px solid #252525;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.signup-container .signup-form input:focus{
+    border-bottom: 1px solid #50a866;
+}
+
+.signup-title{
+    margin-bottom: 25px;
+    color: #252525;
+    font-size: 2rem;
+}
+
+#signup{
+    font-size: 1rem;
+    border: 0.5px solid #252525;
+    outline: none;
+    width: 100%;
+    align-self: center;
+    height: 2rem;
+    cursor: pointer;
+    margin-top: 25px;
+    background-color: #252525;
+    color: #fafafa;
+}
+
+#signup:active{
+    background-color: #2e4b36;
+}
+
+/* ------------ Recuperar contraseña ------------ */
+
+.forgot-container{
+    width: 100vw;
+    height: 100vh;
+    background-image:url('/images/grocery-store3.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: center;
+}
+.forgot-form{
+    height: 100vh;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: center;
+    background-color: #fafafa;
+    padding-top: 180px;
+    gap: 10px;
+}
+
+.forgot-title{
+    margin-bottom: 25px;
+    color: #252525;
+    font-size: 2rem;
+}
+
+.forgot-container .forgot-form input{
+    padding: 8px 5px;
+    outline: none;
+    border: none;
+    border-bottom: 0.5px solid #252525;
+    font-size: 1rem;
+    width: 70%;
+}
+
+#forgotPassBtn{
+    font-size: 1rem;
+    border: 0.5px solid #252525;
+    outline: none;
+    width: 70%;
+    align-self: center;
+    height: 2rem;
+    cursor: pointer;
+    margin-top: 25px;
+    background-color: #252525;
+    color: #fafafa;
+}
+
+#forgotPassBtn:active{
+    background-color: #2e4b36;
+}
