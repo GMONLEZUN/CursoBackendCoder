@@ -410,6 +410,29 @@ h2{
     border-bottom: 1px solid #50a866;
 }
 
+.volver-login{
+    font-size: 1rem;
+    text-decoration: none;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: flex-end;
+    align-items: center;
+    color: #252525;
+    margin-bottom: 25px;
+    cursor: pointer;
+}
+
+.signup-container .volver-login i{
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.signup-container a:visited{
+    color: inherit;
+}
+
 .signup-title{
     margin-bottom: 25px;
     color: #252525;
