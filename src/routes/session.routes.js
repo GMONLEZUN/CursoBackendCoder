@@ -6,8 +6,15 @@ import passport from "passport";
 
 const router = Router();
 
-export function auth(req, res, next) {
-  if (req.session?.username && req.session?.admin) {
+export function authUser(req, res, next) {
+  if (req.session?.username) {
+    return next();
+  }
+  return res.status(401).json("error de autenticacion");
+}
+
+export function authAdmin(req, res, next) {
+  if (req.session?.username && req.session?.role == "admin") {
     return next();
   }
   return res.status(401).json("error de autenticacion");
@@ -17,12 +24,20 @@ export function auth(req, res, next) {
 // Login con Passport
 router.post('/login', passport.authenticate('login', {failureRedirect:'/failLogin'}), async (req, res) => {
 
+  console.log(req.body)
   if (!req.user) {
     return res.status(401).json({status:'Error', error:'Credenciales inválidas'})
   } else {
     req.session.username = req.user.email;
-    req.session.admin = true;
-    res.status(200).json({status:'ok', message: 'Logueado exitosamente'})
+    req.session.currentCartID = req.user.currentCartID;
+    req.session.role = req.user.role;
+
+    const result = await UserModel.findOneAndUpdate(
+      { email: req.user.email }, 
+      { $set: { 'currentCartID': req.user.currentCartID } }, 
+      { new: true }
+    ); 
+    res.status(200).json({status:'ok', message: 'Logueado exitosamente', bd: result})
   }
 })
 
@@ -31,10 +46,16 @@ router.get('/failLogin', async (req, res)=>{
 })
 
 router.post('/signup', passport.authenticate('register', {failureRedirect:'/failSignup'}), async (req, res)=>{
-  const {first_name, last_name, email, age} = req.body;
+  const {first_name, last_name, email, age, currentCartID} = req.body;
   req.session.username = email;
-  req.session.admin = true;
-  res.status(200).json({status:'ok', message: 'user Registered'})
+  req.session.currentCartID = currentCartID;
+  req.session.role = req.user.role;
+  const result = await UserModel.findOneAndUpdate(
+    { email: email }, 
+    { $set: { 'currentCartID': currentCartID } }, 
+    { new: true }
+  ); 
+  res.status(200).json({status:'ok', message: 'user Registered', bd:result})
 })
 
 router.get('/failSignup', async (req, res)=>{
@@ -85,7 +106,7 @@ router.get('/github', passport.authenticate('github',
 router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/login'}),
   async (req,res) =>{
     req.session.username = req.user.email;
-    req.session.admin = true;
+    // req.session.admin = true;
     res.redirect('/products')
   }
   )

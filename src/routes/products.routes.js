@@ -1,19 +1,26 @@
 import { Router } from "express";
 import { ProductManager } from "../dao/dbManagers/DBproductManager.js"
-import { auth } from "./session.routes.js";
+import { authUser } from "./session.routes.js";
 
 const router = Router();
 
 const productManager = new ProductManager()
 
 
-router.get('/', auth, async (req,res)=>{
+router.get('/', authUser, async (req,res)=>{
     let username = req.session.username;
     let limitSet = req.query.limit;
     let pageSet = req.query.page;
+    let userRole = false;
+    let adminRole = false;
+    req.session.role == 'admin' ? adminRole = true : userRole = true
+     
+
     let sortSet = req.query.sorted || 1;
     let value = req.query.search || "";
     
+
+
     if (!limitSet){
         limitSet = 10
     }
@@ -23,7 +30,6 @@ router.get('/', auth, async (req,res)=>{
     
     
     try {
-
         const respuesta = await productManager.getProducts(limitSet, pageSet, sortSet, value);
         
         const { docs, hasPrevPage, hasNextPage, nextPage, prevPage, limit, totalDocs, totalPages } = respuesta.response;
@@ -59,7 +65,9 @@ router.get('/', auth, async (req,res)=>{
             totalDocs,
             totalPages,
             noSort, mayorSort, menorSort,
-            username
+            username,
+            userRole,
+            adminRole
           });
     }
      catch (err) {

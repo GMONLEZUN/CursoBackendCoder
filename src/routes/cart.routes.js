@@ -1,13 +1,12 @@
 import { Router } from "express";
 import { ProductManager } from "../dao/dbManagers/DBproductManager.js"
 import { CartManager } from "../dao/dbManagers/DBcartManager.js"
-import { trusted } from "mongoose";
+
 
 const router = Router();
 
 const productManager = new ProductManager();
 const cartManager = new CartManager();
-
 
 router.post("/", async(req, res)=>{
     try {
@@ -27,10 +26,7 @@ router.post("/", async(req, res)=>{
 router.get("/:cid", async (req, res) => {
     try {
         const {cid} = req.params;
-        const cart = await cartManager.getCartById(cid);
-        // res.json({
-        //     data: cart
-        // })  
+        const cart = await cartManager.getCartById(cid); 
         res.render("cart", {cart})
     } catch (error) {
         res.status(500).json({error: error})

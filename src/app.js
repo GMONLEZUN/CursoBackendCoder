@@ -47,7 +47,7 @@ const environment = async () => {
     }
   };
   
-  environment();
+environment();
 
 // Inicialización de las instancias de Producto y Mensajes
 const productManager = new ProductManager()
@@ -77,8 +77,8 @@ app.use(
         saveUninitialized: false,
     })
 );
-// Passport
 
+// Passport
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session())

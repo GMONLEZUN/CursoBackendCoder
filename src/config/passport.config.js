@@ -34,7 +34,7 @@ const initializePassport = async () =>{
             }
         }
     ))
-    passport.use('login', new localStrategy(async(username, password, done)=>{
+    passport.use('login', new localStrategy({passReqToCallback:true}, async(req, username, password, done)=>{
         try {
             const user = await UserModel.findOne({email: username})
             if (!user) {
@@ -43,6 +43,7 @@ const initializePassport = async () =>{
                 if (!isValidPassword(user.password, password)) {
                     return done(null, false, {message:"bad Password"});
                 } else{
+                    user.currentCartID = req.body.currentCartID;
                     console.log("Authentication successful:", user);          
                     return done(null, user)
                 }

@@ -1,5 +1,12 @@
 <div>
   <div>Bienvenido <span>{{username}}</span></div>
+  {{#if adminRole}}
+  <div class="role">Admin</div>
+  <button class="realTimeProducts">Admin</button>
+  {{/if}}
+  {{#if userRole}}
+  <div class="role">User</div>
+  {{/if}}
   <button class="logout">Logout</button>
   <h2>Productos</h2>
   {{#if limit3}}
