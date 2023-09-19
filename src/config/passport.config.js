@@ -38,7 +38,7 @@ const initializePassport = async () =>{
         try {
             const user = await UserModel.findOne({email: username})
             if (!user) {
-                return done(null,false, {message:"usuario inexistente"})
+                return done(null,false, {message:"usuario inexistente", status:false})
             } else{
                 if (!isValidPassword(user.password, password)) {
                     return done(null, false, {message:"bad Password"});

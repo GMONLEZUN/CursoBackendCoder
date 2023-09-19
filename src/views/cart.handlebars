@@ -1,18 +1,39 @@
 <div>
-  <h1>Carrito</h1>
-  <ul>
-
-      {{#each cart}}
-                {{#each this.products}}
-                 <li> 
-                    <span>Producto:</span><span id="productId">{{this.productId}}</span>
-                    <span>Cantidad:</span><span id="productQty">{{this.quantity}}</span>
-                  </li>
-                {{/each}}
-        {{/each}} 
-
-
-  </ul>
+  <header class="header-products">
+      <a href="/products"><img src="/images/Logo.png" alt="Business logo"></a>
+      <ul class="header-sections">
+        <li class="header-section">Inicio</li>
+        <li class="header-section">Almacén</li>
+        <li class="header-section">Bebidas</li>
+        <li class="header-section">Limpieza</li>
+        <li class="header-section">Congelados</li>
+        {{#if adminRole}}<li class="realTimeProductsBtn">Administrar</li>{{/if}}
+      </ul>
+      <div class="user-cart_container">
+        <div class="username_container">
+          <span class="username_display">{{username}}<span class="hashtag">#</span>
+          {{#if adminRole}}<span class="role">admin</span>{{else}}<span class="role">user</span>{{/if}}
+          <button class="logout">Logout<i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+        </div>
+          <div class="viewCart"><i class="fa-solid fa-cart-shopping"></i></div>
+      </div>
+  </header>
+  <h2>Tu carrito</h2>
+    <div class="container">
+      {{#each products}}
+          <div class="productCart_Container">
+            <img src="{{product.thumbnail}}" alt="Imagen de {{product.title}}">
+            <span class="productCart_title">{{product.title}}</span>
+            <span class="productCart_price">${{product.price}}</span> 
+            <span class="productCart_qty"></span>
+          </div>
+      {{/each}}
+      <div class="total_Container"><span>Total a pagar</span><span class="total_value">${{total}}</span></div>
+    </div>
+  <footer class="footer">
+    The Market® 2023 
+  </footer>
 </div>
 
-<script src="./js/cart.js"></script>
+<script src="/js/cart.js"></script>
+<script src="/js/cartCheckout.js"></script>

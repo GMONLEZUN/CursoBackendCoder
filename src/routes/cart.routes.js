@@ -27,7 +27,12 @@ router.get("/:cid", async (req, res) => {
     try {
         const {cid} = req.params;
         const cart = await cartManager.getCartById(cid); 
-        res.render("cart", {cart})
+        let products = [...cart.products];
+        let total = 0;
+        products.forEach(product => {
+            total += product.product.price
+        })
+        res.render('cart',{products,total})
     } catch (error) {
         res.status(500).json({error: error})
     }
@@ -38,19 +43,17 @@ router.get("/:cid", async (req, res) => {
 router.post('/:cid/product/:pid', async (req, res)=>{
     try {
         const {cid, pid} = req.params;
-        // const {qty} = req.body
-        const product = await productManager.getProductById(pid);
         const cart = await cartManager.getCartById(cid);
-        cartManager.addProductToCart(cart[0], product[0])
+        let response = await cartManager.addProductToCart(cart, pid)
         res.json({
             message: "Producto agregado correctamente",
-            producto: product,
-            cart: cart
+            producto: pid,
+            cart: response
         })
-    } catch (error) {
+    } catch (error) { 
+        console.log(error)
         res.status(500).json({error: error})
     }
-    
 })
 
 router.delete('/:cid', async (req,res)=>{

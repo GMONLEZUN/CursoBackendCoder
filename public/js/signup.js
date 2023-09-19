@@ -15,8 +15,6 @@ async function getCartId(frontUser) {
       localStorage.setItem('storedUser', frontUser)
       localStorage.setItem("cartIdStored",currentCartID)
   }
-
-  
   return currentCartID;
 }
 
@@ -40,6 +38,7 @@ async function postSignup(first_name, last_name, age, username, password, curren
   });
 
   const result = await response.json();
+  console.log('result[signup.js]' + result)
   return result;
 }
 
@@ -54,7 +53,6 @@ signupForm.addEventListener("submit", async e => {
   const age = document.getElementById("age").value;
   currentCartID = await getCartId(username);
   
-  console.log(currentCartID);
 
   const res = await postSignup(first_name, last_name, age, username, password, currentCartID) 
   if (res.status == 'ok'){

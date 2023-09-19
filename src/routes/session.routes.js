@@ -23,8 +23,6 @@ export function authAdmin(req, res, next) {
 
 // Login con Passport
 router.post('/login', passport.authenticate('login', {failureRedirect:'/failLogin'}), async (req, res) => {
-
-  console.log(req.body)
   if (!req.user) {
     return res.status(401).json({status:'Error', error:'Credenciales inválidas'})
   } else {
@@ -58,6 +56,7 @@ router.post('/signup', passport.authenticate('register', {failureRedirect:'/fail
   res.status(200).json({status:'ok', message: 'user Registered', bd:result})
 })
 
+// ------------------------------------------- EDIT
 router.get('/failSignup', async (req, res)=>{
   console.log('Failed');
   res.send({error: 'failed'})

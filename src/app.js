@@ -58,7 +58,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 // Directorio estático para archivos públicos
-app.use(express.static(__dirname+"/public"));
+app.use(express.static("public"));
 
 // Guarda las sesiones de los usuarios en Mongo Atlas
 app.use(cookieParser("C0d3rS3cr3t"));
@@ -87,7 +87,6 @@ app.use(passport.session())
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", `${__dirname}/views`);
-
 
 // Rutas
 app.use("/realtimeproducts", realtimeRouter);

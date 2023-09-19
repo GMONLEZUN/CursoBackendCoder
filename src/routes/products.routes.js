@@ -9,39 +9,24 @@ const productManager = new ProductManager()
 
 router.get('/', authUser, async (req,res)=>{
     let username = req.session.username;
-    let limitSet = req.query.limit;
-    let pageSet = req.query.page;
+    let limitSet = req.query.limit || 10;
+    let pageSet = req.query.page || 1;
     let userRole = false;
     let adminRole = false;
     req.session.role == 'admin' ? adminRole = true : userRole = true
-     
-
-    let sortSet = req.query.sorted || 1;
+    let sortSet = req.query.sorted || 0;
     let value = req.query.search || "";
-    
-
-
-    if (!limitSet){
-        limitSet = 10
-    }
-    if (!pageSet){
-        pageSet = 1
-    }
-    
-    
     try {
         const respuesta = await productManager.getProducts(limitSet, pageSet, sortSet, value);
-        
-        const { docs, hasPrevPage, hasNextPage, nextPage, prevPage, limit, totalDocs, totalPages } = respuesta.response;
+        const { docs, page, hasPrevPage, hasNextPage, nextPage, prevPage, limit, totalDocs, totalPages } = respuesta.response;
         const products = docs;
-        
         let noSort = false;
         let mayorSort = false;
         let menorSort = false;
-        let limit3 = false;
+        let limit25 = false;
         let limit10 = false;
-
-        limit==3 ? limit3 = true : limit10=true; 
+        
+        limit==25 ? limit25 = true : limit10=true; 
         
         if (respuesta.sortProd == 0) {
             noSort = true;
@@ -52,7 +37,7 @@ router.get('/', authUser, async (req,res)=>{
         if (respuesta.sortProd == 1) {
             menorSort = true;
         }
-
+        
         res.render( "products", {
             products,
             hasPrevPage,
@@ -60,10 +45,11 @@ router.get('/', authUser, async (req,res)=>{
             prevPage,
             nextPage,
             limit,
-            limit3,
+            limit25,
             limit10,
             totalDocs,
             totalPages,
+            page,
             noSort, mayorSort, menorSort,
             username,
             userRole,

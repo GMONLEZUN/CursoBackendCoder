@@ -6,6 +6,7 @@ const productPrice = document.getElementById("productPrice");
 const productThumbnail = document.getElementById("productThumbnail");
 const productCode = document.getElementById("productCode"); 
 const productStock = document.getElementById("productStock");
+const productCategory = document.getElementById("productCategory");
 
 const deleteBtns = document.querySelectorAll('.btnEliminar');
 
@@ -28,7 +29,8 @@ form.addEventListener('submit',e =>{
         price: productPrice.value,
         thumbnail: productThumbnail.value,
         code: productCode.value,
-        stock: productStock.value
+        stock: productStock.value,
+        category: productCategory.value
       })
     }
   

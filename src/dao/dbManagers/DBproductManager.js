@@ -1,8 +1,10 @@
 import { productsModel } from "../models/products.model.js";
 
 export class ProductManager {
-    async getProducts(limitProd, pageProd, sortProd, value) {
-      
+  async getProducts(limitProd, pageProd, sortProd, value) {
+      if (value == "Inicio") {
+        value = ""
+      }
       let options;
       sortProd != 0 ? options = {limit:limitProd, page:pageProd, sort: { price: sortProd }, lean: true} : options = {limit:limitProd, page:pageProd, lean:true};
   
@@ -10,6 +12,10 @@ export class ProductManager {
         let response;
         if (value) {
           response = await productsModel.paginate({title: {$regex: `${value}`, $options: 'i'}},options)
+          if (response.docs.length == 0) {
+            response = await productsModel.paginate({category: {$regex: `${value}`, $options: 'i'}},options)
+          }
+          console.log(response)
         } else {
           response = await productsModel.paginate({},options)
         }
@@ -23,7 +29,7 @@ export class ProductManager {
       return await productsModel.find({}).lean();
     }
     async getProductById(id) {
-      return await productsModel.find({ _id: id });
+      return await productsModel.findOne({ _id: id });
     }
   
     async addProduct(data) {
