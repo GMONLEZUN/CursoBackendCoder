@@ -1,8 +1,9 @@
 import { Router } from "express";
-import UserModel from "../dao/models/users.model.js";
 import { createHash } from "../utils.js";
-// import { isValidPassword } from "../utils.js";
 import passport from "passport";
+import {UserManager} from "../dao/dbManagers/DBuserManager.js"
+
+const userManager = new UserManager()
 
 const router = Router();
 
@@ -22,7 +23,7 @@ export function authAdmin(req, res, next) {
 
 
 // Login con Passport
-router.post('/login', passport.authenticate('login', {failureRedirect:'/failLogin'}), async (req, res) => {
+router.post('/login', passport.authenticate('login'), async (req, res) => {
   if (!req.user) {
     return res.status(401).json({status:'Error', error:'Credenciales inválidas'})
   } else {
@@ -30,11 +31,8 @@ router.post('/login', passport.authenticate('login', {failureRedirect:'/failLogi
     req.session.currentCartID = req.user.currentCartID;
     req.session.role = req.user.role;
 
-    const result = await UserModel.findOneAndUpdate(
-      { email: req.user.email }, 
-      { $set: { 'currentCartID': req.user.currentCartID } }, 
-      { new: true }
-    ); 
+    const result = await userManager.setCartID(req.user.email, req.user.currentCartID)
+ 
     res.status(200).json({status:'ok', message: 'Logueado exitosamente', bd: result})
   }
 })
@@ -44,19 +42,18 @@ router.get('/failLogin', async (req, res)=>{
 })
 
 router.post('/signup', passport.authenticate('register', {failureRedirect:'/failSignup'}), async (req, res)=>{
-  const {first_name, last_name, email, age, currentCartID} = req.body;
+  const {email, currentCartID} = req.body;
   req.session.username = email;
   req.session.currentCartID = currentCartID;
   req.session.role = req.user.role;
-  const result = await UserModel.findOneAndUpdate(
-    { email: email }, 
-    { $set: { 'currentCartID': currentCartID } }, 
-    { new: true }
-  ); 
+
+  const result = await userManager.setCartID(req.user.email, req.user.currentCartID)
+
   res.status(200).json({status:'ok', message: 'user Registered', bd:result})
 })
 
 // ------------------------------------------- EDIT
+
 router.get('/failSignup', async (req, res)=>{
   console.log('Failed');
   res.send({error: 'failed'})
@@ -105,7 +102,6 @@ router.get('/github', passport.authenticate('github',
 router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/login'}),
   async (req,res) =>{
     req.session.username = req.user.email;
-    // req.session.admin = true;
     res.redirect('/products')
   }
   )

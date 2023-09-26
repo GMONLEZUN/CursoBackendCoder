@@ -25,20 +25,57 @@ router.post("/", async(req, res)=>{
 
 router.get("/:cid", async (req, res) => {
     try {
+        const username = req.session.username
+        let userRole = false;
+        let adminRole = false;
+        req.session.role == 'admin' ? adminRole = true : userRole = true;
         const {cid} = req.params;
         const cart = await cartManager.getCartById(cid); 
         let products = [...cart.products];
+        let prodsTemp = [];
+        let equalIDs = (currProd, tmpProd) =>{
+            if (tmpProd.product._id.equals(currProd.product._id)) {
+                return true
+            } else {
+                return false
+            }
+        }
+        for (let i = 0; i < products.length; i++) {
+            let prodIndex = prodsTemp.findIndex(prod => {
+                if(equalIDs(products[i],prod)){
+                    return true
+                }
+            })
+            if (prodIndex == -1) {
+                let price = products[i].product.price
+                prodsTemp.push({...products[i],quantity:1, price: price.toString()})
+            } else {
+                let newQuantity = Number(prodsTemp[prodIndex].quantity) + 1;
+                let newPrice = Number(prodsTemp[prodIndex].price) * newQuantity;
+                prodsTemp[prodIndex] = {...prodsTemp[prodIndex], price: newPrice.toString(), quantity: newQuantity.toString()}
+            }
+
+        }
         let total = 0;
         products.forEach(product => {
             total += product.product.price
         })
-        res.render('cart',{products,total})
+        // res.render('cart',{products,total,username,adminRole,userRole})
+        res.json({prodsTemp,total,username,adminRole,userRole})
     } catch (error) {
         res.status(500).json({error: error})
     }
   
   });
 
+router.get('/:cid/totalprods', async (req, res)=>{
+    const {cid} = req.params;
+    const cart = await cartManager.getCartById(cid); 
+    if (cart){
+        let products = [...cart.products];
+        res.json({'count':products.length})
+    }
+})
 
 router.post('/:cid/product/:pid', async (req, res)=>{
     try {

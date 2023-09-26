@@ -15,11 +15,11 @@
           {{#if adminRole}}<span class="role">admin</span>{{else}}<span class="role">user</span>{{/if}}
           <button class="logout">Logout<i class="fa-solid fa-arrow-right-from-bracket"></i></button>
         </div>
-          <div class="viewCart"><i class="fa-solid fa-cart-shopping"></i></div>
+          <div class="viewCart"><i class="fa-solid fa-cart-shopping"></i><span class="countProducts"></span></div>
       </div>
   </header>
-  <h2>Tu carrito</h2>
-    <div class="container">
+  <h2 class="title_checkoutCart">Tu carrito</h2>
+    <div class="container_checkoutCart">
       {{#each products}}
           <div class="productCart_Container">
             <img src="{{product.thumbnail}}" alt="Imagen de {{product.title}}">
@@ -28,12 +28,12 @@
             <span class="productCart_qty"></span>
           </div>
       {{/each}}
-      <div class="total_Container"><span>Total a pagar</span><span class="total_value">${{total}}</span></div>
     </div>
+    <div class="total_Container"><span>Total a pagar</span><span class="total_value">${{total}}</span></div>
   <footer class="footer">
     The Market® 2023 
   </footer>
 </div>
 
-<script src="/js/cart.js"></script>
+<script src="/js/products.js"></script>
 <script src="/js/cartCheckout.js"></script>

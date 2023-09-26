@@ -9,13 +9,15 @@ const productManager = new ProductManager()
 
 router.get('/', authUser, async (req,res)=>{
     let username = req.session.username;
-    let limitSet = req.query.limit || 10;
-    let pageSet = req.query.page || 1;
     let userRole = false;
     let adminRole = false;
-    req.session.role == 'admin' ? adminRole = true : userRole = true
+    req.session.role == 'admin' ? adminRole = true : userRole = true;
+
+    let limitSet = req.query.limit || 10;
+    let pageSet = req.query.page || 1;
     let sortSet = req.query.sorted || 0;
     let value = req.query.search || "";
+    
     try {
         const respuesta = await productManager.getProducts(limitSet, pageSet, sortSet, value);
         const { docs, page, hasPrevPage, hasNextPage, nextPage, prevPage, limit, totalDocs, totalPages } = respuesta.response;

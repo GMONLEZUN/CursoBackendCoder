@@ -1,21 +1,44 @@
 const addToCartBtns = document.querySelectorAll('.product_card-btnAddToCart');
 const viewCart = document.querySelector('.viewCart');
+const countProducts = document.querySelector('.countProducts')
 
 const currentCartID = localStorage.getItem("cartIdStored");
 const storedUser = localStorage.getItem('storedUser');
 
+document.addEventListener('DOMContentLoaded', async e =>{
+    let result = await fetch(`/cart/${currentCartID}/totalprods`);
+    let data = await result.json();
+    if(countProducts){
+        countProducts.innerText = data.count;
+    }
+})
+
+
 addToCartBtns.forEach(btn =>{
     btn.addEventListener('click', async e =>{
+        Toastify({
+            text: "Producto agregado al carrito",
+            className: "prod-agregado",
+            gravity: "bottom", 
+            style: {
+              background: "rgba(43, 11, 117, 0.74)",
+            }
+          }).showToast();
         const productID = e.target.getAttribute('data-id');
         const res = await fetch(`/cart/${currentCartID}/product/${productID}`, {
             method:"POST"
         });
+        let result = await fetch(`/cart/${currentCartID}/totalprods`);
+        let data = await result.json();
+        countProducts.innerText = data.count;
     })
 })
+if (viewCart) {
+    viewCart.addEventListener('click', e => {
+        window.open(`/cart/${currentCartID}`, "_blank")
+    })
+}
 
-viewCart.addEventListener('click', e => {
-    window.open(`/cart/${currentCartID}`, "_blank")
-})
 
 const paramsForm = document.querySelector('.params');
 const sort = document.querySelector('#sorted');

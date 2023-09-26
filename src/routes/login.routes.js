@@ -3,9 +3,14 @@ import {Router} from 'express';
 const router = Router();
 
 router.get('', (req, res)=>{
-    res.render("login",{
-        title: "Inicia sesión"
-    })
+    if(req.session?.username){
+        res.redirect('/products')
+    } else {
+        res.render("login",{
+            title: "Inicia sesión"
+        })
+    }
+   
 })
 
 

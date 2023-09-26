@@ -10,11 +10,11 @@ async function postLogin(username, password, currentCartID) {
       },
       body: JSON.stringify({ username, password, currentCartID }),
     });
+    
     const result = await response.json();
-    console.log({result})
     return result;
   } catch (error) {
-    console.log(error)
+    return {'status':"Not ok"}
   }
 }
 
@@ -34,10 +34,23 @@ async function getCartId(frontUser) {
   }
   return currentCartID;
 }
-
+const errorLogin = document.querySelector('.error-login')
 
 
 const loginForm = document.getElementById("login-form");
+const userInput = document.getElementById("username")
+const passInput = document.getElementById("password")
+
+userInput.addEventListener('keydown', e =>{
+  if(errorLogin.style.display == 'block'){
+    errorLogin.style.display = 'none'
+  }
+})
+passInput.addEventListener('keydown', e =>{
+  if(errorLogin.style.display == 'block'){
+    errorLogin.style.display = 'none'
+  }
+})
 
 loginForm.addEventListener("submit", async e => {
   e.preventDefault();
@@ -48,7 +61,7 @@ loginForm.addEventListener("submit", async e => {
   if(response.status == 'ok'){
     window.location.href = '/products';
   } else {
-    window.location.href = '/signup'
+    errorLogin.style.display = 'block'
   }
 });
 

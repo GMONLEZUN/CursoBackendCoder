@@ -15,7 +15,11 @@
           {{#if adminRole}}<span class="role">admin</span>{{else}}<span class="role">user</span>{{/if}}
           <button class="logout">Logout<i class="fa-solid fa-arrow-right-from-bracket"></i></button>
         </div>
-          <div class="viewCart"><i class="fa-solid fa-cart-shopping"></i></div>
+        {{#if adminRole}}
+        <span></span>
+        {{else}}
+          <div class="viewCart"><i class="fa-solid fa-cart-shopping"></i><span class="countProducts"></span></div>
+        {{/if}}
       </div>
   </header>
 
@@ -46,17 +50,31 @@
   </form>
   
   <ul id="productList">
+    {{#if adminRole}}
       {{#each products}}
         <li class="product_card">
           <img src={{this.thumbnail}} class="product_card-img"/>
           <h3 class="product_card-title">{{this.title}}</h3>
           <p class="product_card-description">{{this.description}}</p>
           <div class="product_card-cartprice">
-            <button type="button" class="product_card-btnAddToCart" data-id="{{this._id}}"><i class="fa-solid fa-cart-shopping"></i>Agregar</button>
-            <p class="product_card-price">${{this.price}}</p>
+              <button type="button" disabled><i class="fa-solid fa-cart-shopping"></i>[X] Agregar</button>
+              <p class="product_card-price">${{this.price}}</p>
           </div>
         </li>
       {{/each}}
+    {{else}}
+        {{#each products}}
+          <li class="product_card">
+            <img src={{this.thumbnail}} class="product_card-img"/>
+            <h3 class="product_card-title">{{this.title}}</h3>
+            <p class="product_card-description">{{this.description}}</p>
+            <div class="product_card-cartprice">
+                <button type="button" class="product_card-btnAddToCart" data-id="{{this._id}}"><i class="fa-solid fa-cart-shopping"></i>Agregar</button>
+                <p class="product_card-price">${{this.price}}</p>
+            </div>
+          </li>
+        {{/each}}
+      {{/if}}
   </ul>
   <div class="page-controller">
     {{#if hasPrevPage}}
@@ -90,4 +108,4 @@
   </footer>
 </div>
 
-<script src="/js/cart.js"></script>
+<script src="/js/products.js"></script>

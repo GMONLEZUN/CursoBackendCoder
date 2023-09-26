@@ -26,6 +26,8 @@ import cookieParser from "cookie-parser";
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
 
+
+
 // Inicialización de dotenv
 dotenv.config();
 
@@ -61,7 +63,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.static("public"));
 
 // Guarda las sesiones de los usuarios en Mongo Atlas
-app.use(cookieParser("C0d3rS3cr3t"));
+app.use(cookieParser());
 app.use(
     session({
         store: MongoStore.create({
@@ -70,9 +72,9 @@ app.use(
                 useNewUrlParser: true,
                 useUnifiedtopology: true,
             },
-            ttl:300,
+            ttl:43200,
         }),
-        secret: "codersecret",
+        secret: "C0d3rS3cr3t",
         resave: false,
         saveUninitialized: false,
     })

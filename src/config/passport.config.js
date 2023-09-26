@@ -43,8 +43,7 @@ const initializePassport = async () =>{
                 if (!isValidPassword(user.password, password)) {
                     return done(null, false, {message:"bad Password"});
                 } else{
-                    user.currentCartID = req.body.currentCartID;
-                    console.log("Authentication successful:", user);          
+                    user.currentCartID = req.body.currentCartID;        
                     return done(null, user)
                 }
             }

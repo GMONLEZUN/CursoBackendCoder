@@ -15,7 +15,6 @@ export class ProductManager {
           if (response.docs.length == 0) {
             response = await productsModel.paginate({category: {$regex: `${value}`, $options: 'i'}},options)
           }
-          console.log(response)
         } else {
           response = await productsModel.paginate({},options)
         }
