@@ -1,12 +1,14 @@
 import { Router } from "express";
-import { ProductManager } from "../dao/dbManagers/DBproductManager.js"
-import { CartManager } from "../dao/dbManagers/DBcartManager.js"
+import { ProductManager } from "../dao/dbManagers/DBproductManager.js";
+import { CartManager } from "../dao/dbManagers/DBcartManager.js";
+import { TicketManager } from "../dao/dbManagers/DBticketManager.js";
 
 
 const router = Router();
 
 const productManager = new ProductManager();
 const cartManager = new CartManager();
+const ticketManager = new TicketManager();
 
 router.post("/", async(req, res)=>{
     try {
@@ -48,11 +50,11 @@ router.get("/:cid", async (req, res) => {
             })
             if (prodIndex == -1) {
                 let price = products[i].product.price
-                prodsTemp.push({...products[i],quantity:1, price: price.toString()})
+                prodsTemp.push({...products[i],quantity:1, price: price})
             } else {
                 let newQuantity = Number(prodsTemp[prodIndex].quantity) + 1;
-                let newPrice = Number(prodsTemp[prodIndex].price) * newQuantity;
-                prodsTemp[prodIndex] = {...prodsTemp[prodIndex], price: newPrice.toString(), quantity: newQuantity.toString()}
+                let newPrice = Number(prodsTemp[prodIndex].product.price) * newQuantity;
+                prodsTemp[prodIndex] = {...prodsTemp[prodIndex], price: newPrice, quantity: newQuantity}
             }
 
         }
@@ -60,8 +62,8 @@ router.get("/:cid", async (req, res) => {
         products.forEach(product => {
             total += product.product.price
         })
-        // res.render('cart',{products,total,username,adminRole,userRole})
-        res.json({prodsTemp,total,username,adminRole,userRole})
+        res.render('cart',{prodsTemp,total,username,adminRole,userRole})
+        // res.json({prodsTemp,total,username,adminRole,userRole})
     } catch (error) {
         res.status(500).json({error: error})
     }
@@ -152,6 +154,18 @@ router.put('/:cid', async (req,res) => {
             res.status(500).json({ message: 'Error al agregar productos al carrito', error: error });
         }
 });
+
+router.get('/:cid/purchase', async (req,res)=>{
+    const {cid} = req.params;
+    const username = req.session.username
+    const cart = await cartManager.getCartById(cid);
+    try{
+        const res = await ticketManager.addTicket(cart,username);
+        res.json({message:"Ticket generado", respuesta: res})
+    } catch(error){
+        res.status(500).json({message:"Error en el checkout", error:error})
+    }
+})
 
 
 

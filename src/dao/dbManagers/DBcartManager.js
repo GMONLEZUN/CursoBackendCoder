@@ -59,6 +59,17 @@ export class CartManager {
         return res;
     }
 
+    async modifyArrCart(cid, products){
+      const cart = await cartsModel.findById(cid);
+      const res = await cartsModel.findByIdAndUpdate(
+          cart._id,
+          {$set:{
+            'products': products
+          }}
+      )
+      return res;
+    }
+
   }
   
  
