@@ -4,6 +4,7 @@ import UserModel from "../dao/models/users.model.js";
 import { createHash, isValidPassword } from "../utils.js";
 import GitHubStrategy from 'passport-github2';
 import * as dotenv from 'dotenv';
+import UsersDTO from '../dto/users.dto.js'
 
 dotenv.config();
 
@@ -26,7 +27,10 @@ const initializePassport = async () =>{
                 }
 
                 const newUser = {first_name, last_name, email, age, password:createHash(password)};
-                let result = await UserModel.create(newUser);
+                const formatedNewUser = new UsersDTO(newUser);
+                formatedNewUser.currentCartID = req.body.currentCartID; 
+                let result = await UserModel.create(formatedNewUser);
+                console.log({result})
                 return done(null, result);
 
             } catch (error) {

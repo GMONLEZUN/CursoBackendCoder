@@ -9,7 +9,18 @@ document.addEventListener('DOMContentLoaded', async e =>{
 })
 
 confirmPurchaseBTN.addEventListener('click', async e =>{
-    let result = await fetch(`/cart/${currCartID}/purchase`);
+    let purchase = await fetch(`/cart/${currCartID}/purchase`);
+    let purchaseJSON = await purchase.json();
+    let result = await fetch(`/cart/${currCartID}/totalprods`);
     let data = await result.json();
-    console.log({data})
+    countProds.innerText = data.count;
+    let remainingProds = []
+    if(purchaseJSON.message == 'Ticket generado'){
+        alert('Compra realizada')
+        if(purchaseJSON.respuesta.remaining.length > 0){
+            alert('Algunos productos de tu carrito no tenían stock')
+        }
+    }
+    window.location.reload();
+    // console.log(purchaseJSON.ticket, purchaseJSON.remainingProds, purchaseJSON.purchased)
 })

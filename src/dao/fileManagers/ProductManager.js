@@ -10,6 +10,25 @@ export class ProductManager{
         this.products = [];
     }
 
+    // Ver todos los productos
+    async getProducts(sortProd, value){
+      try {
+          let data = await utils.readFile(this.path);
+          this.products = data?.length > 0 ? data : [];
+          let filteredProducts = []
+          this.products.forEach(product=>{
+            if(product.title == value || product.category == value || product.description == value) {
+              filteredProducts.push(product)
+            }
+          })
+          if(filteredProducts.length>1){
+            return filteredProducts;
+          }
+          return this.products;
+        } catch (error) {
+          console.log(error);
+        }
+    }
     // Agregar producto
 
     async addProduct(title, description, price, code, stock, thumbnail){
@@ -51,16 +70,7 @@ export class ProductManager{
           }
     }
 
-    // Ver todos los productos
-    async getProducts(){
-        try {
-            let data = await utils.readFile(this.path);
-            this.products = data?.length > 0 ? data : [];
-            return this.products;
-          } catch (error) {
-            console.log(error);
-          }
-    }
+
 
     // Ver un producto
     async getProductById(id){

@@ -159,12 +159,11 @@ router.get('/:cid/purchase', async (req,res)=>{
     const {cid} = req.params;
     const username = req.session.username
     const cart = await cartManager.getCartById(cid);
-    try{
-        const res = await ticketManager.addTicket(cart,username);
-        res.json({message:"Ticket generado", respuesta: res})
-    } catch(error){
-        res.status(500).json({message:"Error en el checkout", error:error})
-    }
+    const resp = await ticketManager.addTicket(cart,username);
+    console.log('en cartroutes')
+    console.log({resp})
+    res.json({message:"Ticket generado", respuesta: resp})
+
 })
 
 

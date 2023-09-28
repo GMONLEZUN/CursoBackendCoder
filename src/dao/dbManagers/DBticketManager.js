@@ -103,8 +103,6 @@ export class TicketManager {
                 pass: process.env.PASSWORD_MAIL
             }
         })
-        console.log('here')
-        console.log(__dirname)
         // envío el mail
         await transport.sendMail({
             from:`Purchase Testing <${process.env.USER_MAIL}>`,
@@ -134,6 +132,6 @@ export class TicketManager {
 
         console.log('compra finalizada!')
         const res = await ticketsModel.create(newTicket);
-        return res;
+        return {ticket: res, remaining: remainingProds, purchased: purchasedProds};
     }
 }
