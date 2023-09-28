@@ -74,7 +74,7 @@ app.use(
             },
             ttl:43200,
         }),
-        secret: "C0d3rS3cr3t",
+        secret: process.env.COOKIE_SECRET,
         resave: false,
         saveUninitialized: false,
     })
