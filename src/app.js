@@ -11,7 +11,8 @@ import chatRouter from './routes/chat.routes.js';
 import loginRouter from './routes/login.routes.js';
 import sessionRouter from './routes/session.routes.js';
 import signupRouter from './routes/signup.routes.js';
-import forgotRouter from './routes/forgotPass.routes.js'
+import forgotRouter from './routes/forgotPass.routes.js';
+import mockingProducts from './routes/mockingProducts.routes.js'
 
 import { ProductManager } from "./dao/dbManagers/DBproductManager.js";
 
@@ -99,6 +100,7 @@ app.use("/", loginRouter);
 app.use("/signup", signupRouter);
 app.use("/api/session/", sessionRouter);
 app.use("/forgot", forgotRouter);
+app.use("/mockingproducts", mockingProducts);
 
 // Inicialización del server
 const httpServer = app.listen(PORT, (e)=>{
