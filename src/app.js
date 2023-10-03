@@ -27,7 +27,9 @@ import cookieParser from "cookie-parser";
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
 
-
+import CustomError from './services/errors/customError.js';
+import EErrors from './services/errors/enumError.js';
+import { generateProductErrorInfo } from './services/errors/errorInfo.js';
 
 // Inicialización de dotenv
 dotenv.config();
@@ -115,7 +117,18 @@ let messages = await messageManager.getMessages() || [];
 socketServer.on("connection", socket => {
     console.log("Nuevo cliente conectado");
     socket.on("addProduct", async newProduct => {
-        await productManager.addProduct(newProduct);
+        console.log(newProduct)
+        if (newProduct.title.length < 4 || newProduct.description.length < 11) {
+            const error = CustomError.createError({
+                name : "Error al agregar un producto",
+                cause : "Parámetros incompletos o muy cortos",
+                message : generateProductErrorInfo(newProduct),
+                code : EErrors.INVALID_TYPES_ERROR,
+            })
+            console.log({error})
+        } else{
+            await productManager.addProduct(newProduct);
+        }
         // Agregar el nuevo producto a la lista de productos
         let products = await productManager.getProductsRealtime();
         socket.emit("updateList", products);
