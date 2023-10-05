@@ -57,10 +57,10 @@ const initializePassport = async () =>{
         }
     })
     )
-    passport.use('github', new GitHubStrategy({clientID: GITHUB_CLIENT_ID, clientSecret: GITHUB_CLIENT_SECRET, callbackURL: GITHUB_CALLBACK_URL}, 
+    passport.use('github', new GitHubStrategy({clientID: GITHUB_CLIENT_ID, clientSecret: GITHUB_CLIENT_SECRET, callbackURL: GITHUB_CALLBACK_URL,  scope: 'user:email'}, 
             async (accessToken, refreshToken, profile, done) => {
             try {
-                let user = await UserModel.findOne({email: profile._json.email}) || await UserModel.findOne({email: `${profile._json.login}@mail.com`})
+                let user = await UserModel.findOne({email: profile.emails[0].value}) || await UserModel.findOne({email: `${profile._json.login}@mail.com`})
                 if (!user) {
                     const newUser = {
                         first_name: profile._json.login,

@@ -145,9 +145,17 @@ socketServer.on("connection", socket => {
     socketServer.emit('messageLogs', messages);
     
     socket.on('message', async data =>{
-        messages.push(data);
-        await messageManager.addMessage(data.user, data.message)
-        socketServer.emit('messageLogs', messages)
+        if(!data){
+            const error = CustomError.createError({
+                name : "Error enviar mensaje",
+                cause : "Mensaje vacío",
+                code : EErrors.INVALID_TYPES_ERROR,
+            })
+        } else {            
+            messages.push(data);
+            await messageManager.addMessage(data.user, data.message)
+            socketServer.emit('messageLogs', messages)
+        }
     });
     socket.on("disconnect", () => {
         console.log("Cliente desconectado");
