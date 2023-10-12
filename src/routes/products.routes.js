@@ -59,7 +59,7 @@ router.get('/', authUser, async (req,res)=>{
           });
     }
      catch (err) {
-        console.log(err);
+        req.logger.error(`Error: ${err}`)
         res.json({ data: err });
     }
 })
@@ -72,6 +72,7 @@ router.get("/:pid", async (req, res) => {
     if (product) {
       res.json({ message: "success", data: product });
     } else {
+        req.logger.warning('Warning: El producto solicitado no existe')
       res.json({
         message: "El producto solicitado no existe",
       });
@@ -88,6 +89,7 @@ router.post("/", async(req, res)=>{
         thumbnail
     } = req.body;
     if (!title || !description || !code || !price || !stock) {
+        req.logger.error('Error: Datos incompletos');
         res.json({ message: "Datos incompletos" });
       } else { 
         

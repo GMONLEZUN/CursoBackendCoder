@@ -18,14 +18,15 @@
           <div class="viewCart"><i class="fa-solid fa-cart-shopping"></i><span class="countProducts"></span></div>
       </div>
   </header>
-  <div class="title_checkoutCart">Tu carrito</div>
-      <div class="productCart_Container_titles">
-        <span></span>
-        <span>Producto</span>
-        <span>$/u.</span>
-        <span>Cantidad</span>
-        <span>Precio</span>
-      </div>
+  <div class="checkout_container">
+    <div class="title_checkoutCart">Tu carrito</div>
+    <div class="productCart_Container_titles">
+      <span></span>
+      <span>Producto</span>
+      <span>$/u.</span>
+      <span>Cantidad</span>
+      <span>Precio</span>
+    </div>
     <div class="container_checkoutCart">
       {{#each prodsTemp}}
           <div class="productCart_Container">
@@ -38,7 +39,11 @@
       {{/each}}
     </div>
     <div class="total_Container"><span>Total a pagar:</span><span class="total_value">${{total}}</span></div>
-    <button type="button" class="confirmPurchaseBTN">Confirmar compra</button>
+    <div class="btn_container">
+      <button type="button" class="confirmPurchaseBTN">Confirmar compra</button>
+    </div>
+  </div>
+  
   <footer class="footer">
     The Market® 2023 
   </footer>

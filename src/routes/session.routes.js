@@ -3,6 +3,8 @@ import { createHash } from "../utils.js";
 import passport from "passport";
 import {UserManager} from "../dao/dbManagers/DBuserManager.js"
 
+import UserModel from "../dao/models/users.model.js"
+
 import CustomError from "../services/errors/customError.js";
 import EErrors from "../services/errors/enumError.js"
 
@@ -47,6 +49,7 @@ router.post('/login', passport.authenticate('login'), async (req, res) => {
       message:"Error trying to validate user",
       code:EErrors.AUTHENTICATION_ERROR,
     })
+    req.logger.warning('Warning: Credenciales incorrectas');
     return res.json({error});
   } else {
     req.session.username = req.user.email;
@@ -85,6 +88,7 @@ router.get('/logout', (req,res)=>{
     if (!err) {
       res.json({respuesta:'ok'});
     } else {
+      req.logger.error('Error: no pudimos cerrar la sesión');
       res.json({
         status: "Error al cerrar sesion",
         body: err,
@@ -100,11 +104,12 @@ router.post("/forgot", async (req, res) => {
     email: username,
   });
 
-  if (result.length === 0)
+  if (result.length === 0){
+    req.logger.error('Error: el usuario no existe')
     return res.status(401).json({
       respuesta: "el usuario no existe",
     });
-  else {
+  } else {
     const respuesta = await UserModel.findByIdAndUpdate(result[0]._id, {
       password: createHash(password),
     });

@@ -13,6 +13,7 @@ import sessionRouter from './routes/session.routes.js';
 import signupRouter from './routes/signup.routes.js';
 import forgotRouter from './routes/forgotPass.routes.js';
 import mockingProducts from './routes/mockingProducts.routes.js'
+import loggerTest from './routes/loggerTest.routes.js'
 
 import { ProductManager } from "./dao/dbManagers/DBproductManager.js";
 
@@ -30,6 +31,7 @@ import initializePassport from './config/passport.config.js';
 import CustomError from './services/errors/customError.js';
 import EErrors from './services/errors/enumError.js';
 import { generateProductErrorInfo } from './services/errors/errorInfo.js';
+import { addLogger } from './services/errors/logger.js';
 
 // Inicialización de dotenv
 dotenv.config();
@@ -93,6 +95,8 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", `${__dirname}/views`);
 
+app.use(addLogger)
+
 // Rutas
 app.use("/realtimeproducts", realtimeRouter);
 app.use("/products", productRouter);
@@ -103,11 +107,15 @@ app.use("/signup", signupRouter);
 app.use("/api/session/", sessionRouter);
 app.use("/forgot", forgotRouter);
 app.use("/mockingproducts", mockingProducts);
+app.use("/loggertest", loggerTest);
 
 // Inicialización del server
 const httpServer = app.listen(PORT, (e)=>{
     console.log(`Servidor escuchando en el puerto: ${PORT}`);
 });
+
+
+
 
 // WebSockets para la sección de chat y update en tiempo real de productos
 const socketServer = new Server(httpServer);
