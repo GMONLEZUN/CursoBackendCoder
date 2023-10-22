@@ -8,4 +8,14 @@ export class UserManager{
             { new: true }
         )
     }
+    async changeRol(id){
+        const user = await UserModel.findById(id);
+        if(user.role == 'user'){
+            user.role = 'premium'
+        } else {
+            user.role = 'user';
+        }
+        user.save()
+        return user
+    }
 }

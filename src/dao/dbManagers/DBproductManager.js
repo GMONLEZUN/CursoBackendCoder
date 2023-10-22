@@ -24,6 +24,9 @@ export class ProductManager {
       }
       
     }
+    async getAllProducts(){
+      return await productsModel.find({}).lean();
+    }
     async getProductsRealtime(){
       return await productsModel.find({}).lean();
     }

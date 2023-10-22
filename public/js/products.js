@@ -40,19 +40,24 @@ document.addEventListener('DOMContentLoaded', async e =>{
 
 addToCartBtns.forEach(btn =>{
     btn.addEventListener('click', async e =>{
-        Toastify({
-            text: "Producto agregado al carrito",
-            className: "prod-agregado",
-            gravity: "bottom", 
-            style: {
-              background: "rgba(43, 11, 117, 0.74)",
-            }
-          }).showToast();
-        const productID = e.target.getAttribute('data-id');
-        const res = await fetch(`/cart/${currentCartID}/product/${productID}`, {
-            method:"POST"
-        });
-        updateCart(currentCartID)
+        const productOwner = e.target.getAttribute('owner')
+        if(storedUser == productOwner){
+            alert('Sos el owner de este producto y no podés agregarlo al carrito')
+        } else {
+            Toastify({
+                text: "Producto agregado al carrito",
+                className: "prod-agregado",
+                gravity: "bottom", 
+                style: {
+                  background: "rgba(43, 11, 117, 0.74)",
+                }
+              }).showToast();
+            const productID = e.target.getAttribute('data-id');
+            const res = await fetch(`/cart/${currentCartID}/product/${productID}`, {
+                method:"POST"
+            });
+            updateCart(currentCartID)
+        }
     })
 })
 

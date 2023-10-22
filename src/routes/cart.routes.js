@@ -160,8 +160,6 @@ router.get('/:cid/purchase', async (req,res)=>{
     const username = req.session.username
     const cart = await cartManager.getCartById(cid);
     const resp = await ticketManager.addTicket(cart,username);
-    console.log('en cartroutes')
-    console.log({resp})
     res.json({message:"Ticket generado", respuesta: resp})
 
 })

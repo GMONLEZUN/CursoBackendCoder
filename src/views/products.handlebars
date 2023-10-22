@@ -69,7 +69,7 @@
             <h3 class="product_card-title">{{this.title}}</h3>
             <p class="product_card-description">{{this.description}}</p>
             <div class="product_card-cartprice">
-                <button type="button" class="product_card-btnAddToCart" data-id="{{this._id}}"><i class="fa-solid fa-cart-shopping"></i>Agregar</button>
+                <button type="button" class="product_card-btnAddToCart" data-id="{{this._id}}" owner="{{this.owner}}"><i class="fa-solid fa-cart-shopping"></i>Agregar</button>
                 <p class="product_card-price">${{this.price}}</p>
             </div>
           </li>

@@ -64,6 +64,11 @@ router.get('/', authUser, async (req,res)=>{
     }
 })
 
+router.get('/allproducts', async (req,res) =>{
+    const respuesta  = productManager.getAllProducts();
+    return respuesta
+})
+
 router.get("/:pid", async (req, res) => {
     const { pid } = req.params;
   
@@ -86,6 +91,7 @@ router.post("/", async(req, res)=>{
         price,
         code,
         stock,
+        owner,
         thumbnail
     } = req.body;
     if (!title || !description || !code || !price || !stock) {
@@ -100,6 +106,7 @@ router.post("/", async(req, res)=>{
                 price,
                 code,
                 stock,
+                owner,
                 thumbnail,
             }
             const response = await productManager.addProduct(productToAdd);
