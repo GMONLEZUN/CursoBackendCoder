@@ -14,7 +14,7 @@ export class CartController {
             cart = await cartManager.getById(cid);
             if(!cart){
                 req.logger.error(`Error: El carrito ${cid} no existe`);
-                return res.status(400).json({message: `El carrito ${cid} no existe`})
+                return res.status(404).json({message: `El carrito ${cid} no existe`})
                 }
         } catch (error) {
             if (error.name == 'CastError') {
@@ -46,8 +46,8 @@ export class CartController {
         products.forEach(product => {
             total += product.product.price
         })
-        return res.status(200).json({ prodsTemp, total, username, adminRole, userRole})
-        // return res.status(200).render('cart',{prodsTemp,total,username,adminRole,userRole})
+        // return res.status(200).json({ prodsTemp, total, username, adminRole, userRole})
+        return res.status(200).render('cart',{prodsTemp,total,username,adminRole,userRole})
     }
     add = async(req,res)=>{
         try {
@@ -65,7 +65,7 @@ export class CartController {
             cart = await cartManager.getById(cid);
             if(!cart){
                 req.logger.error(`Error: El carrito ${cid} no existe`);
-                return res.status(400).json({message: `El carrito ${cid} no existe`})
+                return res.status(404).json({message: `El carrito ${cid} no existe`})
                 }
         } catch (error) {
             if (error.name == 'CastError') {
@@ -95,7 +95,7 @@ export class CartController {
             cart = await cartManager.getById(cid);
             if(!cart){
                 req.logger.error(`Error: El carrito ${cid} no existe`);
-                return res.status(400).json({message: `El carrito ${cid} no existe`})
+                return res.status(404).json({message: `El carrito ${cid} no existe`})
                 }
             let products = [...cart.products];
             return res.status(200).json({count:products.length})
@@ -115,7 +115,7 @@ export class CartController {
             const response = await cartManager.deleteById(cid);
             if(!response){
                 req.logger.error(`Error: El carrito ${cid} no existe`);
-                return res.status(400).json({message: `El carrito ${cid} no existe`})
+                return res.status(404).json({message: `El carrito ${cid} no existe`})
                 }
             return res.status(200).json({message: `El carrito con id: ${cid} fue eliminado exitosamente`, response})
         } catch (error) {
@@ -171,7 +171,7 @@ export class CartController {
             const response = await cartManager.updateManyProductsOfCart(cid, newProducts);
             if(!response){
                 req.logger.error(`Error: El carrito ${cid} no existe`);
-                return res.status(400).json({message: `El carrito ${cid} no existe`})
+                return res.status(404).json({message: `El carrito ${cid} no existe`})
                 }
             return res.status(200).json({ message: `Se agregaron nuevos productos en el carrito`, response})
         } catch (error) {
@@ -195,7 +195,7 @@ export class CartController {
             cart = await cartManager.getById(cid);
             if(!cart){
                 req.logger.error(`Error: El carrito ${cid} no existe`);
-                return res.status(400).json({message: `El carrito ${cid} no existe`})
+                return res.status(404).json({message: `El carrito ${cid} no existe`})
                 }
         } catch (error) {
             if (error.name == 'CastError') {

@@ -7,6 +7,8 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import cookieParser from "cookie-parser";
 import passport from 'passport';
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
 
 import { __dirname } from './utils.js';
 
@@ -95,7 +97,22 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", `${__dirname}/views`);
 
+// Logger
 app.use(addLogger)
+
+// Implementación de SwaggerOptions
+const SwaggerOptions = {
+    definition: {
+      openapi: "3.0.1",
+      info: {
+        title: "Documentación del proyecto de tienda TheMarket",
+        description: "API para ecommerce donde se puede realizar un CRUD de productos, CRUD de carritos y chat interno",
+      },
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`],
+  };
+//conectamos Swagger
+const specs = swaggerJsdoc(SwaggerOptions);
 
 // Rutas
 app.use("/", loginRouter);
@@ -110,6 +127,7 @@ app.use("/mockingproducts", mockingProducts);
 app.use("/loggertest", loggerTest);
 app.use("/api/users", userRoutes);
 app.use("/premium", premiumRouter);
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 // Inicialización del server
 const httpServer = app.listen(PORT, (e)=>{

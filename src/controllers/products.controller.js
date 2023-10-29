@@ -99,7 +99,7 @@ export class ProductController {
         product = await productManager.getById(pid);
         if(!product){
           req.logger.error(`Error: El producto ${pid} no existe`);
-          return res.status(400).json({message: `El producto ${pid} no existe`})
+          return res.status(404).json({message: `El producto ${pid} no existe`})
         }
       } catch (error) {
         if (error.name == 'CastError') {
@@ -124,7 +124,7 @@ export class ProductController {
         product = await productManager.getById(pid);
         if(!product){
           req.logger.error(`Error: El producto ${pid} no existe`);
-          return res.status(400).json({message: `El producto ${pid} no existe`})
+          return res.status(404).json({message: `El producto ${pid} no existe`})
         }
       } catch (error) {
         console.log(error)
