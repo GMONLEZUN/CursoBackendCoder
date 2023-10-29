@@ -1,6 +1,12 @@
 import express from 'express';
 import { engine } from "express-handlebars";
 import { Server } from 'socket.io';
+import mongoose from 'mongoose';
+import * as dotenv from 'dotenv';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import cookieParser from "cookie-parser";
+import passport from 'passport';
 
 import { __dirname } from './utils.js';
 
@@ -18,16 +24,8 @@ import userRoutes from './routes/users.routes.js';
 import premiumRouter from './routes/premium.routes.js';
 
 import { ProductManager } from "./dao/dbManagers/DBproductManager.js";
-
-import mongoose from 'mongoose';
-import * as dotenv from 'dotenv';
 import { MessageManager } from './dao/dbManagers/DBmessageManager.js'; 
 
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
-import cookieParser from "cookie-parser";
-
-import passport from 'passport';
 import initializePassport from './config/passport.config.js';
 
 import CustomError from './services/errors/customError.js';
@@ -100,14 +98,14 @@ app.set("views", `${__dirname}/views`);
 app.use(addLogger)
 
 // Rutas
-app.use("/realtimeproducts", realtimeRouter);
+app.use("/", loginRouter);
+app.use("/api/session/", sessionRouter);
+app.use("/signup", signupRouter);
+app.use("/forgot", forgotRouter);
 app.use("/products", productRouter);
 app.use("/cart", cartRouter);
+app.use("/realtimeproducts", realtimeRouter);
 app.use("/chat", chatRouter);
-app.use("/", loginRouter);
-app.use("/signup", signupRouter);
-app.use("/api/session/", sessionRouter);
-app.use("/forgot", forgotRouter);
 app.use("/mockingproducts", mockingProducts);
 app.use("/loggertest", loggerTest);
 app.use("/api/users", userRoutes);
@@ -117,9 +115,6 @@ app.use("/premium", premiumRouter);
 const httpServer = app.listen(PORT, (e)=>{
     console.log(`Servidor escuchando en el puerto: ${PORT}`);
 });
-
-
-
 
 // WebSockets para la sección de chat y update en tiempo real de productos
 const socketServer = new Server(httpServer);
