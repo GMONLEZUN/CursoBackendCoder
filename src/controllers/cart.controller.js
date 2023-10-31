@@ -79,7 +79,6 @@ export class CartController {
             let response = await cartManager.addProductToCart(cart,pid);
             return res.status(201).json({message: `Producto ${pid} agregado correctamente al carrito ${cid}`, response})
         } catch (error) {
-            console.log({error})
             if (error.name == 'CastError') {
                 req.logger.error(`Error: El id del producto ingresado es inválido`);
                 return res.status(400).json({ message: `El id del producto ingresado es inválido` });

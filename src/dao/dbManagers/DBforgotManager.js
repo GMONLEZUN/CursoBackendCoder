@@ -7,7 +7,6 @@ export class ForgotManager{
     async searchCode(code){
         let now = ((new Date().getTime())/1000)/60;
         let codeExist = await ForgotModel.findOne({code: code})
-        console.log({codeExist})
         if(!codeExist){
             return false;
         }

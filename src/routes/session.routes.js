@@ -217,7 +217,6 @@ router.post("/forgotbtn", async (req, res) => {
 router.get('/forgot/:code', async (req,res)=>{
   const {code} = req.params;
   const result = await forgotManager.searchCode(code)
-  console.log({result})
   if (result){
     res.redirect('/forgot/reset-password')
   } else {

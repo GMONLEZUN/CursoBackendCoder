@@ -127,7 +127,6 @@ export class ProductController {
           return res.status(404).json({message: `El producto ${pid} no existe`})
         }
       } catch (error) {
-        console.log(error)
         if (error.name == 'CastError') {
           req.logger.error(`Error: El id del producto ingresado es inválido`);
           return res.status(400).json({ message: `El id del producto ingresado es inválido` });
@@ -137,7 +136,6 @@ export class ProductController {
       }
       try{
         let response = await productManager.deleteById(pid);
-        console.log({response})
         return res.status(200).json({message: `El producto ${product.title} ha sido eliminado correctamente`, response})
       }catch(error){
         req.logger.error(`Error: ${error}`);

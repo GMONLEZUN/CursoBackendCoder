@@ -16,8 +16,6 @@ export class TicketManager {
     async addTicket(data, username = 'gabriel.monlezun@gmail.com') {
         let cart = data;
         let products = [...cart.products];
-        console.log({products})
-        console.log({data})
         let prodsTemp = [];
         // fn para comparar igualdad entre pid
         let equalIDs = (currProd, tmpProd) =>{ tmpProd.product._id.equals(currProd.product._id) ? true : false }
