@@ -20,19 +20,15 @@ const initializePassport = async () =>{
             const {first_name, last_name, email, age} = req.body;
             try{
                 let user = await UserModel.findOne({email:username});
-
                 if (user) {
                     console.log('user already exists');
                     return done(null, false)
                 }
-
                 const newUser = {first_name, last_name, email, age, password:createHash(password)};
                 const formatedNewUser = new UsersDTO(newUser);
                 formatedNewUser.currentCartID = req.body.currentCartID; 
                 let result = await UserModel.create(formatedNewUser);
-                console.log({result})
                 return done(null, result);
-
             } catch (error) {
                 return done('error al obtener el usuario'+error);
             }

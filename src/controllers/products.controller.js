@@ -85,7 +85,7 @@ export class ProductController {
             return res.status(400).json({message: "Parámetros faltantes para crear un nuevo producto"})
           }
           const product = await productManager.add({title, description, price, code, stock, owner, thumbnail})
-          return res.status(201).json({message: "Producto agregado correctamente", producto: product})
+          return res.status(201).json({message: "Producto agregado correctamente", payload: product})
         } catch (error) {
           req.logger.error(`Error: ${error}`);
           return res.status(500).json({ message: `Error interno: ${error}` });

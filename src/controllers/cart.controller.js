@@ -52,7 +52,7 @@ export class CartController {
     add = async(req,res)=>{
         try {
             const cart = await cartManager.add();
-            return res.status(201).json({message: `Carrito con id:${cart._id} creado exitosamente`, cart})
+            return res.status(201).json({message: `Carrito con id:${cart._id} creado exitosamente`, payload: cart})
         } catch (error) {
             req.logger.error(`Error: ${error}`);
             return res.status(500).json({ message: `Error interno: ${error}` });

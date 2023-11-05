@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./src/app.js"
+    "start": "nodemon ./src/app.js",
+    "test:products": "mocha ./test/Products.test.js",
+    "test:sessions": "mocha ./test/Sessions.test.js",
+    "test:carts": "mocha ./test/Carts.test.js"
   },
   "repository": {
     "type": "git",
@@ -39,5 +42,10 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3"
   }
 }
