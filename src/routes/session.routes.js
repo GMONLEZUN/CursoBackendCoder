@@ -77,8 +77,8 @@ router.post('/login', passport.authenticate('login'), async (req, res) => {
     req.session.username = req.user.email;
     req.session.currentCartID = req.user.currentCartID;
     req.session.role = req.user.role;
-
-    const result = await userManager.setCartID(req.user.email, req.user.currentCartID)
+    await userManager.setConectionTime(req.user._id);
+    await userManager.setCartID(req.user.email, req.user.currentCartID)
     res.status(200).json({status:'ok', message: 'Logueado exitosamente'})
   }
 })
@@ -89,13 +89,14 @@ router.post('/signup', passport.authenticate('register', {failureRedirect:'/sign
   req.session.role = req.user.role;
 
   const result = await userManager.setCartID(email, currentCartID)
+  await userManager.setConectionTime(req.user._id);
 
   res.status(200).json({status:'ok', message: 'user Registered', payload:result})
 })
 router.get('/logout', (req,res)=>{
-  req.logOut();
-  req.session.destroy((err) => {
+  req.session.destroy( async(err) => {
     if (!err) {
+      await userManager.setConectionTime(req.user._id);
       res.json({respuesta:'ok'});
     } else {
       req.logger.error('Error: no pudimos cerrar la sesión');
