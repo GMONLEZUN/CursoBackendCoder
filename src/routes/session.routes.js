@@ -187,13 +187,12 @@ router.post("/forgotbtn", async (req, res) => {
           <main>
           <p style="margin-left: 40px; margin-top: 30px;"> Solicitud creada el ${forgotObj.createdAt} <span style="color: rgb(175, 52, 52);">*</span></p>
               <p style="text-align: end; padding: 0 20px;">Reset de contraseña de tu cuenta ${forgotObj.email} en tienda The Market ></p>
-              <p style="margin-left: 40px"> Hacé click en el siguiente botón para realizar el reseteo de tu contraseña:</p>
-              <button style="margin-left: 40px; outline: none; border: none; background-color: #252525; color: #fafafa; padding: 24px 92px; display: block; position: relative; margin: auto; font-size: 1rem; font-weight: bold;"><a>Resetear contraseña</a></button>
-              <p style="margin-left: 40px"> Si el botón no funciona podés ingresar a la siguiente URL <span style="font-weight: bold;">${url}/api/session/forgot/${forgotObj.code}</span></p>
+              <p style="margin-left: 40px"> Hacé click en la siguiente URL para realizar el reseteo de tu contraseña:</p>
+              <p style="margin-left: 40px"> Si el link no funciona podés copiar el link y pegarlo en tu navegador <span style="font-weight: bold;">${url}/api/session/forgot/${forgotObj.code}</span></p>
               <p style="margin-left: 40px;margin-top: 50px;"><span style="color: rgb(175, 52, 52);">*</span>Si no realizaste esta solicitud, por favor desestimá este mail</p>
           </main>
           <footer style="height: 50px; width: 100%; background-color: #252525; color: #fafafa; display: flex; align-items: center; margin-top: 30px;"><p style="margin-left: 20px;">Equipo The Market®</p></footer>
-          </body>`,
+      </body>`,
           attachments:[{
               filename: 'Logo.png',
               path:__dirname+'/../public/images/Logo.png',
