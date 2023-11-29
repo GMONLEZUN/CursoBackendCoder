@@ -5,6 +5,9 @@ export class ProductManager {
       if (search == "Inicio") {
         search = ""
       }
+      if(search == 'undefined' || search == 'null'){
+        search = ""
+      }
       let options;
       sorted != 0 ? options = {limit:limit, page:page, sort: { price: sorted }, lean: true} : options = {limit:limit, page:page, lean:true};
       try{

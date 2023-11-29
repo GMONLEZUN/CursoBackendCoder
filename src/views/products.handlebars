@@ -48,34 +48,37 @@
 
  
   </form>
-  
-  <ul id="productList">
-    {{#if adminRole}}
-      {{#each products}}
-        <li class="product_card">
-          <img src={{this.thumbnail}} class="product_card-img"/>
-          <h3 class="product_card-title">{{this.title}}</h3>
-          <p class="product_card-description">{{this.description}}</p>
-          <div class="product_card-cartprice">
-              <button type="button" disabled><i class="fa-solid fa-cart-shopping"></i>[X] Agregar</button>
-              <p class="product_card-price">${{this.price}}</p>
-          </div>
-        </li>
-      {{/each}}
-    {{else}}
+  {{#if products}}
+    <ul id="productList">
+      {{#if adminRole}}
         {{#each products}}
           <li class="product_card">
             <img src={{this.thumbnail}} class="product_card-img"/>
             <h3 class="product_card-title">{{this.title}}</h3>
             <p class="product_card-description">{{this.description}}</p>
             <div class="product_card-cartprice">
-                <button type="button" class="product_card-btnAddToCart" data-id="{{this._id}}" owner="{{this.owner}}"><i class="fa-solid fa-cart-shopping"></i>Agregar</button>
+                <button type="button" disabled><i class="fa-solid fa-cart-shopping"></i>[X] Agregar</button>
                 <p class="product_card-price">${{this.price}}</p>
             </div>
           </li>
         {{/each}}
-      {{/if}}
-  </ul>
+      {{else}}
+          {{#each products}}
+            <li class="product_card">
+              <img src={{this.thumbnail}} class="product_card-img"/>
+              <h3 class="product_card-title">{{this.title}}</h3>
+              <p class="product_card-description">{{this.description}}</p>
+              <div class="product_card-cartprice">
+                  <button type="button" class="product_card-btnAddToCart" data-id="{{this._id}}" owner="{{this.owner}}"><i class="fa-solid fa-cart-shopping"></i>Agregar</button>
+                  <p class="product_card-price">${{this.price}}</p>
+              </div>
+            </li>
+          {{/each}}
+        {{/if}}
+    </ul>
+  {{else}}
+    <div class="not-found">No encontramos ningún producto para tu búsqueda: {{search}}</div>
+  {{/if}}
   <div class="page-controller">
     {{#if hasPrevPage}}
           {{#if noSort}}
